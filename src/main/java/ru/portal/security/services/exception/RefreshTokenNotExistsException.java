@@ -3,6 +3,12 @@ package ru.portal.security.services.exception;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * Исключение бросаеться если токена обновления не существует.<br>
+ * Сообщение по умолчанию {@value MESSAGE}
+ *
+ * @author Федорышин К.В.
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RefreshTokenNotExistsException extends RuntimeException {
 

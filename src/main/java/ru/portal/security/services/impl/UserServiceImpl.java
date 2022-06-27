@@ -33,6 +33,12 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 
+/**
+ * Реализация интерфейса {@link UserService} для взаимодействия
+ * с пользователем.
+ *
+ * @author Федорышин К.В.
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Service
 @Slf4j
@@ -63,6 +69,18 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    /**
+     * Регистрирует пользователя в системе, проверяет пользователя на существование.
+     * Если пользователя не существует добавляет его в систему и создает сущность подсчет попыток входа
+     * При удачной регистрации издает событие {@link ru.portal.security.events.RegistrationUserEvent}
+     *
+     * @param request тело запроса.
+     * @return ответ об успешной аутентификации.
+     * @throws UserExistsException бросаеться если пользователь уже существует в системе.
+     * @see ru.portal.entities.dto.request.DtoUserRequest
+     * @see ru.portal.entities.dto.response.DtoSuccessAuthResponse
+     * @see ru.portal.security.events.RegistrationUserEvent
+     */
     @Transactional(rollbackFor = UserExistsException.class)
     @Override
     public DtoSuccessAuthResponse registrationUser(@NonNull DtoUserRequest request) throws UserExistsException {
@@ -99,6 +117,19 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /**
+     * Авторизует пользвотеля в системе, при успешной авторизации создает токен доступа и
+     * токен обновления, после чего формирует ответ. До начала авторизации пробрасываеться
+     * событие {@link ru.portal.security.events.LoginUserEvent}
+     *
+     * @param request тело запроса.
+     * @return ответ об успешной авторизации.
+     * @throws IncorrectCredentialsException бросаеться если данные пользователя неверны.
+     * @throws UserBannedException           бросаеться если пользователь заблокирован.
+     * @see ru.portal.entities.dto.response.DtoAuthenticationResponse
+     * @see ru.portal.entities.dto.request.DtoUserRequest
+     * @see ru.portal.security.events.LoginUserEvent
+     */
     @NonNull
     @Override
     public DtoAuthenticationResponse login(@NonNull DtoUserRequest request)
@@ -131,12 +162,19 @@ public class UserServiceImpl implements UserService {
         } catch (BadCredentialsException e) {
             throw new IncorrectCredentialsException(e);
         } catch (LockedException e) {
-            throw new UserBannedException(e);
+            throw new UserBannedException("Пользователь заблокирован на один час!", e);
         }
     }
 
+    /**
+     * Проверяет истекло ли время заблокированного пользователя.
+     *
+     * @param user пользователь для проверки.
+     * @return true если блокировка закончилась иначе false.
+     * @see ru.portal.entities.User
+     */
     @Override
-    public boolean isTimeBlock(@NonNull User user) throws IncorrectCredentialsException {
+    public boolean isTimeBlock(@NonNull User user) {
         var attempt = attemptRepository.findByUser(user)
                 .orElseThrow(IllegalArgumentException::new);
 
@@ -144,12 +182,25 @@ public class UserServiceImpl implements UserService {
                 attempt.getLockTime() < Instant.now().toEpochMilli();
     }
 
+    /**
+     * Обновления статуса пользователя.
+     *
+     * @param status стату пользователя.
+     * @param user   пользователь для обновления.
+     * @see ru.portal.entities.Status
+     * @see ru.portal.entities.User
+     */
     @Override
     public void updateStatus(@NonNull Status status, @NonNull User user) {
         user.setStatus(status);
         userRepository.save(user);
     }
 
+    /**
+     * Выход пользвоателя из системы, удаления токена обновления из хранилища.
+     *
+     * @param refreshToken токен обновления.
+     */
     @Override
     public void logout(@NonNull String refreshToken) {
         refreshService.deleteRefreshToken(refreshToken);

@@ -10,18 +10,62 @@ import ru.portal.security.services.exception.IncorrectCredentialsException;
 import ru.portal.security.services.exception.UserBannedException;
 import ru.portal.security.services.exception.UserExistsException;
 
+/**
+ * Интерфейс предоставляет методы для взаимодействия с пользователем.
+ *
+ * @author Федорышин К.В.
+ */
 public interface UserService {
 
+    /**
+     * Регистрирует пользователя в системе.
+     *
+     * @param request тело запроса.
+     * @return ответ об успешной аутентификации.
+     * @throws UserExistsException бросаеться если пользователь уже существует в системе.
+     * @see ru.portal.entities.dto.request.DtoUserRequest
+     * @see ru.portal.entities.dto.response.DtoSuccessAuthResponse
+     */
     DtoSuccessAuthResponse registrationUser(@NonNull DtoUserRequest request) throws UserExistsException;
 
+    /**
+     * Авторизация пользователя в системе.
+     *
+     * @param request тело запроса.
+     * @return ответ об успешной авторизации.
+     * @throws IncorrectCredentialsException бросаеться если данные пользователя неверны.
+     * @throws UserBannedException           бросаеться если пользователь заблокирован.
+     * @see ru.portal.entities.dto.response.DtoAuthenticationResponse
+     * @see ru.portal.entities.dto.request.DtoUserRequest
+     */
     @NonNull
     DtoAuthenticationResponse login(@NonNull DtoUserRequest request)
             throws IncorrectCredentialsException, UserBannedException;
 
-    boolean isTimeBlock(@NonNull User user) throws IncorrectCredentialsException;
+    /**
+     * Проверяет закончилась ли блокировка аккаунта.
+     *
+     * @param user пользователь для проверки.
+     * @return true если блокировка закончилась иначе false.
+     * @see ru.portal.entities.User
+     */
+    boolean isTimeBlock(@NonNull User user);
 
+    /**
+     * Обновляет стату пользователя.
+     *
+     * @param status стату пользователя.
+     * @param user   пользователь для обновления.
+     * @see ru.portal.entities.Status
+     * @see ru.portal.entities.User
+     */
     void updateStatus(@NonNull Status status, @NonNull User user);
 
+    /**
+     * Выход пользователя из аккаунта.
+     *
+     * @param refreshToken токен обновления.
+     */
     void logout(@NonNull String refreshToken);
 
 }

@@ -3,6 +3,14 @@ package ru.portal.security.services.exception;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * Исключение бросаеться если пользователь уже существует.<br>
+ * Сообщение по умолчанию {@value MESSAGE}<br>
+ * Сообщение имя существует {@value LOGIN_EXIST}<br>
+ * Сообщение почта существует {@value EMAIL_EXIST}<br>
+ *
+ * @author Федорышин К.В.
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserExistsException extends RuntimeException {
 
