@@ -6,6 +6,10 @@ import lombok.AccessLevel;
 import lombok.Value;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * Тело запроса при регистрации и авторизации пользователя.
+ * @author Федорышин К.В.
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Value
 public class DtoUserRequest {
