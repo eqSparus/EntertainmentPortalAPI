@@ -10,6 +10,7 @@ import java.time.ZonedDateTime;
 
 /**
  * Класс сущность токена подтверждения пользователя по электронной почты из БД.
+ *
  * @author Федорышин К.В.
  */
 @FieldDefaults(level = AccessLevel.PRIVATE)

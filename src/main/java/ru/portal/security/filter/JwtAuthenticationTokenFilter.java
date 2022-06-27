@@ -20,6 +20,12 @@ import ru.portal.security.utilities.AuthenticatedUtility;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Фильтр аутентифицирует пользователя для доступа к защищенным ресурсам
+ * Проверяет наличие заголовка Authorization и время жизни токена.
+ *
+ * @author Федорышин К.В.
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Component
 @Slf4j

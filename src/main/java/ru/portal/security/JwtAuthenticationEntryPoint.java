@@ -17,7 +17,13 @@ import ru.portal.entities.dto.response.DtoFailedAuthResponse;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+/**
+ * Конечная точка на которую будут перенаправляться неавторизованые запросы
+ * Возвращает статус 401 и сообщение об ошибке {@value MESSAGE}
+ *
+ * @author Федорышин К.В.
+ */
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

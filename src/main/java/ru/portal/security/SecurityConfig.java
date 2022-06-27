@@ -30,6 +30,18 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import java.util.List;
 
+/**
+ * Файл конфигурации для SpringSecurity<br>
+ * Настраевает:<br>
+ * {@link SecurityFilterChain}<br>
+ * {@link WebSecurityCustomizer}<br>
+ * {@link CorsConfigurationSource}<br>
+ * {@link HttpFirewall}<br>
+ * {@link AuthenticationProvider}<br>
+ * {@link AuthenticationManager}
+ *
+ * @author Федорышин К.В.
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Configuration
 @EnableWebSecurity

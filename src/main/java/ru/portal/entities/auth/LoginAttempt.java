@@ -11,6 +11,7 @@ import java.time.ZonedDateTime;
 
 /**
  * Класс сущности подсчета попыток входа из БД.
+ *
  * @author Федорышин К.В.
  */
 @FieldDefaults(level = AccessLevel.PRIVATE)

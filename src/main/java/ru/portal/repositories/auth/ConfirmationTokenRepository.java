@@ -9,6 +9,7 @@ import java.util.Optional;
 
 /**
  * Репозиторий для взамодействия с таблицей токеном подтверждения регистрации в БД.
+ *
  * @author Федорышин К.В.
  */
 @Repository
@@ -20,6 +21,7 @@ public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationT
 
     /**
      * Извлекает токен подтверждения регистрации из хранилища данных.
+     *
      * @param token токен подтверждения.
      * @return токен подтверждения с заданым токеном
      * или {@link Optional#empty()}, если ничего не найдено.
@@ -29,6 +31,7 @@ public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationT
     /**
      * Удаляет токен подтверждения регистрации из
      * хранилищя.
+     *
      * @param token токен подтверждения.
      */
     void deleteByToken(@NonNull String token);

@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
                     .build();
             attemptRepository.save(attempt);
 
-            authenticationPublisher.publishEvent(newUser);
+            authenticationPublisher.publishEventRegistration(newUser);
 
             return DtoSuccessAuthResponse.builder()
                     .userId(newUser.getId())
@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
     public DtoAuthenticationResponse login(@NonNull DtoUserRequest request)
             throws IncorrectCredentialsException, UserBannedException {
 
-        authenticationPublisher.publishEvent(request);
+        authenticationPublisher.publishEventLogin(request);
 
         try {
             var authentication = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());

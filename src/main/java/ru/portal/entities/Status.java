@@ -2,6 +2,7 @@ package ru.portal.entities;
 
 /**
  * Статусы пользователя.
+ *
  * @author Федорышин К.В.
  */
 public enum Status {

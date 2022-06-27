@@ -9,6 +9,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.portal.repositories.UserRepository;
 
+/**
+ * Сервис для извлечения пользователя из хранилища и предоставления SpringSecurity
+ * {@link UserDetails}
+ *
+ * @author Федорышин К.В.
+ * @see ru.portal.security.details.UserDetailsImpl
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -24,6 +31,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return UserDetailsImpl.of(userRepository.findByUsername(username)
-                .orElseThrow(()->new UsernameNotFoundException("Такого пользователя не существует!")));
+                .orElseThrow(() -> new UsernameNotFoundException("Такого пользователя не существует!")));
     }
 }

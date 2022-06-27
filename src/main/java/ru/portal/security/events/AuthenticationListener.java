@@ -21,6 +21,11 @@ import ru.portal.security.services.UserService;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * Слушатели для событий авторизации и регистрации
+ *
+ * @author Федорышин К.В.
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Component
 @Slf4j
@@ -51,6 +56,14 @@ public class AuthenticationListener {
         this.confirmationTokenRepository = confirmationTokenRepository;
     }
 
+    /**
+     * При неверных учетных данных, метод исщет пользователя в БД
+     * и в случае его сущестования увеличивает счетчик попыток на единицу, если
+     * счетчик равен максимальному допустимому значению обнуляет счетчик и блокирует
+     * пользователя на заданое время.
+     *
+     * @param event событие неверных учетных данных пользователя.
+     */
     @Transactional
     @EventListener(classes = AuthenticationFailureBadCredentialsEvent.class)
     public void onApplicationFailure(AuthenticationFailureBadCredentialsEvent event) {
@@ -78,6 +91,12 @@ public class AuthenticationListener {
     }
 
 
+    /**
+     * При успешной авторизации находит пользователя и его количество
+     * попыток входа после чего обнуляет счетчик.
+     *
+     * @param event событие успешной авторизации пользователя.
+     */
     @Transactional
     @EventListener(classes = AuthenticationSuccessEvent.class)
     public void onApplicationSuccess(AuthenticationSuccessEvent event) {
@@ -93,6 +112,14 @@ public class AuthenticationListener {
         attemptRepository.save(attempt);
     }
 
+    /**
+     * Событие авторизации пользователя, если пользователь существует
+     * проверяет заблокирован ли он и вышло ли время блокировки в случее
+     * выполнения проверки обновляет статус пользователя на {@link Status#ACTIVE}.
+     *
+     * @param event событие авторизации пользователя.
+     * @see ru.portal.security.events.LoginUserEvent
+     */
     @Transactional
     @EventListener(classes = LoginUserEvent.class)
     public void onApplicationLogin(LoginUserEvent event) {
@@ -108,6 +135,14 @@ public class AuthenticationListener {
 
     }
 
+    /**
+     * Создает токен подтверждения аккаунта и сохранят в БД
+     * Формирует ссылку на подтверждение регистрации и
+     * отправляет ей на почту.
+     *
+     * @param event событие успешной регистрации пользователя.
+     * @see ru.portal.security.events.RegistrationUserEvent
+     */
     @Transactional
     @EventListener(classes = RegistrationUserEvent.class)
     public void onApplicationEmail(RegistrationUserEvent event) {

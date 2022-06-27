@@ -10,6 +10,7 @@ import java.util.Optional;
 
 /**
  * Репозиторий для взамодействия с таблицей попыток входа пользователя в БД.
+ *
  * @author Федорышин К.В.
  */
 @Repository
@@ -21,6 +22,7 @@ public interface LoginAttemptRepository extends JpaRepository<LoginAttempt, Long
 
     /**
      * Извлекает попытки входа пользователя по пользователю.
+     *
      * @param user пользователь.
      * @return попытки входа или {@link Optional#empty()}, если ничего не найдено.
      */

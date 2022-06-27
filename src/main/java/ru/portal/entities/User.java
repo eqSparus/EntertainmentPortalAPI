@@ -9,6 +9,7 @@ import java.time.ZonedDateTime;
 
 /**
  * Класс сущности пользователя из БД
+ *
  * @author Федорышин К.В.
  */
 @FieldDefaults(level = AccessLevel.PRIVATE)

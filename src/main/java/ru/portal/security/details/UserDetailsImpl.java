@@ -12,6 +12,11 @@ import ru.portal.entities.User;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * Реализация {@link UserDetails} для хранения информации о пользователи.
+ *
+ * @author Федорышин К.В.
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserDetailsImpl implements UserDetails {
 
@@ -21,6 +26,12 @@ public class UserDetailsImpl implements UserDetails {
         this.user = user;
     }
 
+    /**
+     * Фабричный метод для создания {@link UserDetails}.
+     *
+     * @param user сущность пользователя.
+     * @return класс с информацие о пользователи {@link UserDetails}.
+     */
     public static UserDetails of(@NonNull User user) {
         return new UserDetailsImpl(user);
     }

@@ -10,6 +10,7 @@ import java.time.ZonedDateTime;
 
 /**
  * Класс сущности токена обновления из БД.
+ *
  * @author Федорышин К.В.
  */
 @FieldDefaults(level = AccessLevel.PRIVATE)
