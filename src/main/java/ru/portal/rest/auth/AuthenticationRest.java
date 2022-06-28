@@ -14,6 +14,11 @@ import ru.portal.entities.dto.response.DtoSuccessAuthResponse;
 import ru.portal.security.services.ConfirmationService;
 import ru.portal.security.services.UserService;
 
+/**
+ * Конечные точки для регистрации и аутентификации пользователя.
+ *
+ * @author Федорышин К.В.
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RestController
 public class AuthenticationRest {

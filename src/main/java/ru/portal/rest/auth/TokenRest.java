@@ -14,6 +14,11 @@ import ru.portal.entities.dto.response.DtoAuthenticationResponse;
 import ru.portal.security.services.TokenRefreshService;
 import ru.portal.security.services.UserService;
 
+/**
+ * Конечные точки для токенов обновления.
+ *
+ * @author Федорышин К.В.
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RestController
 public class TokenRest {

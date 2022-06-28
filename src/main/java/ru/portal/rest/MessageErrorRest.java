@@ -12,6 +12,11 @@ import ru.portal.security.services.exception.*;
 
 import java.time.OffsetDateTime;
 
+/**
+ * Обработчик ошибок.
+ *
+ * @author Федорышин К.В.
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RestControllerAdvice
 public class MessageErrorRest {
