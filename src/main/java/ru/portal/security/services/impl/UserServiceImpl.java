@@ -206,4 +206,26 @@ public class UserServiceImpl implements UserService {
     public void logout(@NonNull String refreshToken) {
         refreshService.deleteRefreshToken(refreshToken);
     }
+
+    /**
+     * Проверяет существует ли имя пользователя.
+     *
+     * @param username имя пользователя.
+     * @return true если имя существует, false если нет.
+     */
+    @Override
+    public boolean checkUsername(@NonNull String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    /**
+     * Проверяет существует ли электронный адрес пользователя.
+     *
+     * @param email электронная почта пользователя.
+     * @return true если адрес существует, false если нет.
+     */
+    @Override
+    public boolean checkEmail(@NonNull String email) {
+        return userRepository.existsByEmail(email);
+    }
 }

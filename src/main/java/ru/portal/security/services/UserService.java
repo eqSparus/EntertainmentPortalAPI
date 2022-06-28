@@ -68,4 +68,19 @@ public interface UserService {
      */
     void logout(@NonNull String refreshToken);
 
+    /**
+     * Проверяет существует ли имя пользователя.
+     *
+     * @param username имя пользователя.
+     * @return true если имя существует, false если нет.
+     */
+    boolean checkUsername(@NonNull String username);
+
+    /**
+     * Проверяет существует ли электронный адрес пользователя.
+     *
+     * @param email электронная почта пользователя.
+     * @return true если адрес существует, false если нет.
+     */
+    boolean checkEmail(@NonNull String email);
 }

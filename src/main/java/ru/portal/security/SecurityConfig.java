@@ -73,7 +73,8 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authenticationProvider(authenticationProvider())
                 .authorizeRequests(reqConfig -> reqConfig
-                        .antMatchers("/registration", "/login", "/refreshtoken","/confirmation/*").permitAll()
+                        .antMatchers("/registration", "/login", "/refreshtoken", "/confirmation/*",
+                                "/checkname", "/checkemail").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
