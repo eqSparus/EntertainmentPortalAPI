@@ -15,8 +15,6 @@ import lombok.experimental.FieldDefaults;
 public class UserExistsException extends RuntimeException {
 
     static String MESSAGE = "Такой пользователь уже существует!";
-    public static String LOGIN_EXIST = "Пользователь с таким именем уже существует!";
-    public static String EMAIL_EXIST = "Пользователь с таким адресом уже существует!";
 
     public UserExistsException() {
         super(MESSAGE);
