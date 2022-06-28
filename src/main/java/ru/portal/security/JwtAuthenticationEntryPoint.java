@@ -1,12 +1,12 @@
 package ru.portal.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
@@ -29,12 +29,16 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     static String MESSAGE = "Для доступа к ресурсу необходима аутентификация";
 
+    ObjectMapper mapper;
+
+    @Autowired
+    public JwtAuthenticationEntryPoint(ObjectMapper mapper) {
+        this.mapper = mapper;
+    }
+
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
-
-        var mapper = new ObjectMapper()
-                .registerModule(new JavaTimeModule());
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
@@ -47,7 +51,5 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                 .build();
 
         mapper.writeValue(response.getOutputStream(), dtoResponse);
-
-
     }
 }
