@@ -2,9 +2,26 @@ package ru.portal.security.services;
 
 import org.springframework.lang.NonNull;
 import ru.portal.entities.dto.response.DtoSuccessAuthResponse;
+import ru.portal.security.services.exception.ConfirmationTokenNotExistException;
+import ru.portal.security.services.exception.TokenTimeExpiredException;
 
+/**
+ * Токен подтверждения электронной почты.
+ *
+ * @author Федорышин К.В.
+ */
 public interface ConfirmationService {
 
-    DtoSuccessAuthResponse confirmation(@NonNull String token);
+    /**
+     * Проверяет токен подтверждения электронной почты и возвращает ответ.
+     *
+     * @param token подтверждения электронной почты.
+     * @return ответ подтверждения.
+     * @throws ConfirmationTokenNotExistException бросаеться если токена подтверждение не существутет.
+     * @throws TokenTimeExpiredException бросаеться если срок действия токена истек.
+     * @see ru.portal.entities.dto.response.DtoSuccessAuthResponse
+     */
+    DtoSuccessAuthResponse confirmation(@NonNull String token)
+            throws ConfirmationTokenNotExistException, TokenTimeExpiredException;
 
 }

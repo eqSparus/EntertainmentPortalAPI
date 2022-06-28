@@ -7,13 +7,38 @@ import ru.portal.entities.dto.response.DtoAuthenticationResponse;
 
 import java.util.Optional;
 
+/**
+ * Интерфейс для взаимодействия с токенами обновления.
+ *
+ * @author Федорышин К.В.
+ */
 public interface TokenRefreshService {
 
+    /**
+     * Обновляет токен доступа и токен обновления и возвращает.
+     * ответ
+     *
+     * @param refreshToken токен обновления.
+     * @return ответ обновления токена.
+     * @see ru.portal.entities.dto.response.DtoAuthenticationResponse
+     */
     @NonNull
     DtoAuthenticationResponse refreshToken(@NonNull String refreshToken);
 
+    /**
+     * Добавляет токен обновления к пользователю и возращает его.
+     *
+     * @param user пользователь.
+     * @return токен обновления.
+     * @see ru.portal.entities.auth.RefreshToken
+     */
     Optional<RefreshToken> addRefreshToken(@NonNull User user);
 
-    void deleteRefreshToken (@NonNull String token);
+    /**
+     * Удаляет токен обновления из хранилища.
+     *
+     * @param token токен обновления.
+     */
+    void deleteRefreshToken(@NonNull String token);
 
 }

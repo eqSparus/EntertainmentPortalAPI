@@ -60,7 +60,7 @@ public class JwtAuthenticationTokenFilter extends GenericFilterBean {
             var token = tokenService.getToken(header);
 
             if (tokenService.isValidToken(token)) {
-                var user = userDetailsService.loadUserByUsername(tokenService.getEmail(token));
+                var user = userDetailsService.loadUserByUsername(tokenService.getUsername(token));
                 AuthenticatedUtility.authentication(user);
             }
         }

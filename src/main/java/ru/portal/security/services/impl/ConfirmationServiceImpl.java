@@ -19,6 +19,12 @@ import ru.portal.security.services.exception.TokenTimeExpiredException;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 
+/**
+ * Реализация интерфейса {@link ConfirmationService} для подтверждения электронной
+ * почты.
+ *
+ * @author Федорышин К.В.
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Service
 @Slf4j
@@ -34,9 +40,20 @@ public class ConfirmationServiceImpl implements ConfirmationService {
         this.confirmationRepository = confirmationRepository;
     }
 
+    /**
+     * Проверяет токен на существования и время жизни пользователя, в случае успеха
+     * удаляет токен подтверждения из БД и активирует учетную запись пользователя.
+     *
+     * @param token подтверждения электронной почты.
+     * @return ответ подтверждения.
+     * @throws ConfirmationTokenNotExistException бросаеться если токена подтверждение не существутет.
+     * @throws TokenTimeExpiredException бросаеться если срок действия токена истек.
+     * @see ru.portal.entities.dto.response.DtoSuccessAuthResponse
+     */
     @Transactional
     @Override
-    public DtoSuccessAuthResponse confirmation(@NonNull String token) {
+    public DtoSuccessAuthResponse confirmation(@NonNull String token)
+            throws ConfirmationTokenNotExistException, TokenTimeExpiredException {
 
         var confirmationToken = confirmationRepository.findByToken(token)
                 .orElseThrow(ConfirmationTokenNotExistException::new);
@@ -51,6 +68,7 @@ public class ConfirmationServiceImpl implements ConfirmationService {
                     .userId(confirmationToken.getUser().getId())
                     .build();
         } else {
+            confirmationRepository.deleteByToken(token);
             throw new TokenTimeExpiredException();
         }
 

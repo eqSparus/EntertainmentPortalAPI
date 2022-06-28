@@ -18,6 +18,12 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Date;
 
+/**
+ * Реализация интерфейса {@link TokenService} для
+ * токенов доступа.
+ *
+ * @author Федорышин К.В.
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Service
 @Slf4j
@@ -39,26 +45,45 @@ public class TokenServiceImpl implements TokenService {
                 .getBytes(StandardCharsets.UTF_8));
     }
 
+    /**
+     * Создает токен доступа со стандартным временем и именем пользователя.
+     *
+     * @param username имя пользователя.
+     * @return токена доступа с "Bearer_".
+     */
     @NonNull
     @Override
-    public String createToken(@NonNull String email) {
-        return createToken(email, validTime);
+    public String createToken(@NonNull String username) {
+        return createToken(username, validTime);
     }
 
+    /**
+     * Создает токен доступа и именем пользователя.
+     *
+     * @param username имя пользователя.
+     * @param time     время жизни токена.
+     * @return токена доступа с "Bearer_".
+     */
     @NonNull
     @Override
-    public String createToken(@NonNull String email, @NonNull Long time) {
+    public String createToken(@NonNull String username, @NonNull Long time) {
         var timeStart = Instant.now();
         var timeStop = Instant.ofEpochSecond(timeStart.getEpochSecond() + time);
 
         return bearer + Jwts.builder()
-                .setSubject(email)
+                .setSubject(username)
                 .setIssuedAt(Date.from(timeStart))
                 .setExpiration(Date.from(timeStop))
                 .signWith(secretKey)
                 .compact();
     }
 
+    /**
+     * Извлекает из запроса токен доступа и удаляет "Bearer_".
+     *
+     * @param request запрос к серверу
+     * @return токен доступа без "Bearer_".
+     */
     @NonNull
     @Override
     public String getToken(@NonNull HttpServletRequest request) {
@@ -66,12 +91,24 @@ public class TokenServiceImpl implements TokenService {
         return getToken(headerValue);
     }
 
+    /**
+     * Удаляет из токена "Bearer_".
+     *
+     * @param token токен доступа
+     * @return токен доступа без "Bearer_".
+     */
     @NonNull
     @Override
     public String getToken(@NonNull String token) {
-        return token.substring(bearer.length());
+        return token.replace(bearer, "");
     }
 
+    /**
+     * Проверяет время жизни токена.
+     *
+     * @param token токен доступа
+     * @return true если токен действительный иначе false.
+     */
     @Override
     public boolean isValidToken(@NonNull String token) {
         var parser = Jwts.parserBuilder()
@@ -90,9 +127,15 @@ public class TokenServiceImpl implements TokenService {
         return false;
     }
 
+    /**
+     * Получает имя пользователя пользователя из токена.
+     *
+     * @param token токен доступа
+     * @return имя пользователя.
+     */
     @NonNull
     @Override
-    public String getEmail(@NonNull String token) {
+    public String getUsername(@NonNull String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build()
