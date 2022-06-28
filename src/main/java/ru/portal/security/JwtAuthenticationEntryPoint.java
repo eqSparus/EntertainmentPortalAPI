@@ -12,7 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
-import ru.portal.entities.dto.response.DtoFailedAuthResponse;
+import ru.portal.entities.dto.response.DtoFailedResponse;
 
 import java.io.IOException;
 import java.time.OffsetDateTime;
@@ -43,7 +43,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
-        var dtoResponse = DtoFailedAuthResponse.builder()
+        var dtoResponse = DtoFailedResponse.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .message(MESSAGE)
                 .path(request.getContextPath() + request.getServletPath())

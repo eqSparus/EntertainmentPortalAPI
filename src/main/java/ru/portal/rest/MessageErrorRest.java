@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.portal.entities.dto.response.DtoFailedAuthResponse;
+import ru.portal.entities.dto.response.DtoFailedResponse;
 import ru.portal.security.services.exception.*;
 
 import java.time.OffsetDateTime;
@@ -20,8 +20,8 @@ public class MessageErrorRest {
     @ExceptionHandler({UserExistsException.class, RefreshTokenNotExistsException.class,
             IncorrectCredentialsException.class, UserBannedException.class, TokenTimeExpiredException.class,
             ConfirmationTokenNotExistException.class})
-    public DtoFailedAuthResponse getErrorMessage(Throwable throwable, HttpServletRequest request) {
-        return DtoFailedAuthResponse.builder()
+    public DtoFailedResponse getErrorMessage(Throwable throwable, HttpServletRequest request) {
+        return DtoFailedResponse.builder()
                 .message(throwable.getMessage())
                 .status(HttpStatus.CONFLICT.value())
                 .timestamp(OffsetDateTime.now())

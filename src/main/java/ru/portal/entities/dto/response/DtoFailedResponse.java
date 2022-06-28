@@ -11,7 +11,7 @@ import java.time.OffsetDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Value
 @Builder
-public class DtoFailedAuthResponse {
+public class DtoFailedResponse {
 
     Integer status;
 
