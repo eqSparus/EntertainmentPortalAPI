@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.portal.entities.dto.Views;
 import ru.portal.entities.dto.request.DtoUserRequest;
@@ -56,5 +57,25 @@ public class AuthenticationRest {
             @PathVariable(name = "token") String token
     ) {
         return confirmationService.confirmation(token);
+    }
+
+    @GetMapping(path = "/checkname", params = "username")
+    public ResponseEntity<String> checkUsername(
+            @RequestParam(name = "username") String username
+    ) {
+        if (userService.checkUsername(username)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT.value()).body("Username exist");
+        }
+        return ResponseEntity.ok("Username not exist");
+    }
+
+    @GetMapping(path = "/checkemail", params = "email")
+    public ResponseEntity<String> checkEmail(
+            @RequestParam(name = "email") String email
+    ) {
+        if (userService.checkEmail(email)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT.value()).body("Email exist");
+        }
+        return ResponseEntity.ok("Email not exist");
     }
 }
