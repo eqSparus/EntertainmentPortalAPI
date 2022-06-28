@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Value;
 import lombok.experimental.FieldDefaults;
+import ru.portal.entities.Role;
 import ru.portal.entities.dto.Views;
 
 import java.time.ZonedDateTime;
@@ -30,6 +31,9 @@ public class DtoAuthenticationResponse {
 
     @JsonView(Views.Login.class)
     String email;
+
+    @JsonView(Views.Login.class)
+    Role role;
 
     @JsonView(Views.Login.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING)

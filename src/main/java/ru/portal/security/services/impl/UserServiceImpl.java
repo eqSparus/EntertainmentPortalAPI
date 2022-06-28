@@ -155,6 +155,7 @@ public class UserServiceImpl implements UserService {
                     .createAt(user.getCreateAt())
                     .updateAt(user.getUpdateAt())
                     .authorization(token)
+                    .role(user.getRole())
                     .refreshToken(refreshToken)
                     .timestamp(ZonedDateTime.now())
                     .build();
