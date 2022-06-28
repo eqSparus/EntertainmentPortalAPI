@@ -59,4 +59,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
     boolean existsByEmail(@NonNull String email);
 
+    /**
+     * Проверка содержит ли хранилище данных пользователя
+     * с заданым именем.
+     *
+     * @param username имя пользователя.
+     * @return Значение true если хранилище содержит пользователя,
+     * false если нет.
+     */
+    boolean existsByUsername(@NonNull String username);
+
 }
