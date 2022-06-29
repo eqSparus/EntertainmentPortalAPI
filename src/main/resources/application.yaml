@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    username: developer
+    password: super_secret_password
+    url: jdbc:postgresql://localhost:5432/db_portal
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: true
+        use_sql_comments: true
+        highlight_sql: true
+        default_schema: portal_shem
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        jdbc:
+          batch_size: 10
+          fetch_size: 50
+  lifecycle:
+    timeout-per-shutdown-phase: 60s
+  main:
+    lazy-initialization: false
+    banner-mode: console
+
+server:
+  port: 8080
+  shutdown: graceful
+  servlet:
+    context-path: /api/v1
