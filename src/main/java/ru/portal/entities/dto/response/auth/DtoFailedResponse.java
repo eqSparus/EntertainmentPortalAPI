@@ -1,4 +1,4 @@
-package ru.portal.entities.dto.response;
+package ru.portal.entities.dto.response.auth;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
@@ -7,7 +7,6 @@ import lombok.Value;
 import lombok.experimental.FieldDefaults;
 
 import java.time.OffsetDateTime;
-import java.util.List;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Value
@@ -16,7 +15,7 @@ public class DtoFailedResponse {
 
     Integer status;
 
-    List<String> message;
+    String message;
 
     String path;
 

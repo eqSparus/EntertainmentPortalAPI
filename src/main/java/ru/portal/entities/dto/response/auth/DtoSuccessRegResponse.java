@@ -1,4 +1,4 @@
-package ru.portal.entities.dto.response;
+package ru.portal.entities.dto.response.auth;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
