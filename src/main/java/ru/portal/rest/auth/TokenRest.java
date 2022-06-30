@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import ru.portal.entities.dto.Views;
-import ru.portal.entities.dto.response.DtoAuthenticationResponse;
+import ru.portal.entities.dto.response.auth.DtoAuthenticationResponse;
 import ru.portal.security.services.TokenRefreshService;
 import ru.portal.security.services.UserService;
 

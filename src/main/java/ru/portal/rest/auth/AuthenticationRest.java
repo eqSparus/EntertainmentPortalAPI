@@ -1,6 +1,7 @@
 package ru.portal.rest.auth;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.portal.entities.dto.Views;
 import ru.portal.entities.dto.request.DtoUserRequest;
-import ru.portal.entities.dto.response.DtoAuthenticationResponse;
-import ru.portal.entities.dto.response.DtoSuccessAuthResponse;
+import ru.portal.entities.dto.response.auth.DtoAuthenticationResponse;
+import ru.portal.entities.dto.response.auth.DtoSuccessRegResponse;
 import ru.portal.security.services.ConfirmationService;
 import ru.portal.security.services.UserService;
 
@@ -37,8 +38,8 @@ public class AuthenticationRest {
     @PostMapping(path = "/registration", produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public DtoSuccessAuthResponse registrationUser(
-            @RequestBody DtoUserRequest request
+    public DtoSuccessRegResponse registrationUser(
+            @Valid @RequestBody DtoUserRequest request
     ) {
         return userService.registrationUser(request);
     }
@@ -47,13 +48,13 @@ public class AuthenticationRest {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     @JsonView(Views.Login.class)
     public DtoAuthenticationResponse login(
-            @RequestBody DtoUserRequest request
+            @Valid @RequestBody DtoUserRequest request
     ) {
         return userService.login(request);
     }
 
     @GetMapping(path = "/confirmation/{token}")
-    public DtoSuccessAuthResponse confirmation(
+    public DtoSuccessRegResponse confirmation(
             @PathVariable(name = "token") String token
     ) {
         return confirmationService.confirmation(token);

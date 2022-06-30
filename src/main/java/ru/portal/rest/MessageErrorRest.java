@@ -4,10 +4,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.portal.entities.dto.response.DtoFailedResponse;
+import ru.portal.entities.dto.response.auth.DtoFailedResponse;
 import ru.portal.security.services.exception.*;
 
 import java.time.OffsetDateTime;
@@ -29,6 +30,19 @@ public class MessageErrorRest {
         return DtoFailedResponse.builder()
                 .message(throwable.getMessage())
                 .status(HttpStatus.CONFLICT.value())
+                .timestamp(OffsetDateTime.now())
+                .path(request.getContextPath() + request.getServletPath())
+                .build();
+    }
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public DtoFailedResponse getErrorValidMessage(HttpServletRequest request,
+                                                  MethodArgumentNotValidException e) {
+
+        return DtoFailedResponse.builder()
+                .message(e.getBindingResult().getFieldError().getDefaultMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
                 .timestamp(OffsetDateTime.now())
                 .path(request.getContextPath() + request.getServletPath())
                 .build();
