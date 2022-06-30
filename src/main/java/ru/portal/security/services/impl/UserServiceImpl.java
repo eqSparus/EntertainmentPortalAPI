@@ -17,8 +17,8 @@ import ru.portal.entities.Status;
 import ru.portal.entities.User;
 import ru.portal.entities.auth.LoginAttempt;
 import ru.portal.entities.dto.request.DtoUserRequest;
-import ru.portal.entities.dto.response.DtoAuthenticationResponse;
-import ru.portal.entities.dto.response.DtoSuccessAuthResponse;
+import ru.portal.entities.dto.response.auth.DtoAuthenticationResponse;
+import ru.portal.entities.dto.response.auth.DtoSuccessRegResponse;
 import ru.portal.repositories.UserRepository;
 import ru.portal.repositories.auth.LoginAttemptRepository;
 import ru.portal.security.events.AuthenticationPublisher;
@@ -78,12 +78,12 @@ public class UserServiceImpl implements UserService {
      * @return ответ об успешной аутентификации.
      * @throws UserExistsException бросаеться если пользователь уже существует в системе.
      * @see ru.portal.entities.dto.request.DtoUserRequest
-     * @see ru.portal.entities.dto.response.DtoSuccessAuthResponse
+     * @see DtoSuccessRegResponse
      * @see ru.portal.security.events.RegistrationUserEvent
      */
     @Transactional(rollbackFor = UserExistsException.class)
     @Override
-    public DtoSuccessAuthResponse registrationUser(@NonNull DtoUserRequest request) throws UserExistsException {
+    public DtoSuccessRegResponse registrationUser(@NonNull DtoUserRequest request) throws UserExistsException {
 
         var user = userRepository.findByUsernameOrEmail(request.getUsername(), request.getEmail());
 
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
 
             authenticationPublisher.publishEventRegistration(newUser);
 
-            return DtoSuccessAuthResponse.builder()
+            return DtoSuccessRegResponse.builder()
                     .userId(newUser.getId())
                     .timestamp(OffsetDateTime.now())
                     .message("Пользователь зарегистрирован прочерьте почту!")
@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
      * @return ответ об успешной авторизации.
      * @throws IncorrectCredentialsException бросаеться если данные пользователя неверны.
      * @throws UserBannedException           бросаеться если пользователь заблокирован.
-     * @see ru.portal.entities.dto.response.DtoAuthenticationResponse
+     * @see DtoAuthenticationResponse
      * @see ru.portal.entities.dto.request.DtoUserRequest
      * @see ru.portal.security.events.LoginUserEvent
      */

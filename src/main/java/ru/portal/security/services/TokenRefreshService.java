@@ -3,7 +3,7 @@ package ru.portal.security.services;
 import org.springframework.lang.NonNull;
 import ru.portal.entities.User;
 import ru.portal.entities.auth.RefreshToken;
-import ru.portal.entities.dto.response.DtoAuthenticationResponse;
+import ru.portal.entities.dto.response.auth.DtoAuthenticationResponse;
 
 import java.util.Optional;
 
@@ -20,7 +20,7 @@ public interface TokenRefreshService {
      *
      * @param refreshToken токен обновления.
      * @return ответ обновления токена.
-     * @see ru.portal.entities.dto.response.DtoAuthenticationResponse
+     * @see DtoAuthenticationResponse
      */
     @NonNull
     DtoAuthenticationResponse refreshToken(@NonNull String refreshToken);

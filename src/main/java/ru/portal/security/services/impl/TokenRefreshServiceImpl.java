@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.portal.entities.User;
 import ru.portal.entities.auth.RefreshToken;
-import ru.portal.entities.dto.response.DtoAuthenticationResponse;
+import ru.portal.entities.dto.response.auth.DtoAuthenticationResponse;
 import ru.portal.repositories.auth.RefreshTokenRepository;
 import ru.portal.security.services.TokenRefreshService;
 import ru.portal.security.services.TokenService;
@@ -45,7 +45,7 @@ public class TokenRefreshServiceImpl implements TokenRefreshService {
      *
      * @param refreshToken токен обновления.
      * @return ответ обновления токена.
-     * @see ru.portal.entities.dto.response.DtoAuthenticationResponse
+     * @see DtoAuthenticationResponse
      */
     @Transactional(rollbackFor = RefreshTokenNotExistsException.class)
     @NonNull

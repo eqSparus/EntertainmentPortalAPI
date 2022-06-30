@@ -9,7 +9,7 @@ CREATE SCHEMA portal_shem;
 CREATE TABLE portal_shem.users
 (
     user_id   BIGSERIAL PRIMARY KEY,
-    username  VARCHAR(50)  NOT NULL UNIQUE,
+    username  VARCHAR(32)  NOT NULL UNIQUE,
     email     VARCHAR(60) NOT NULL UNIQUE,
     password  VARCHAR(200) NOT NULL,
     status    VARCHAR(20)  NOT NULL,
