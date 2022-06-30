@@ -2,7 +2,7 @@ package ru.portal.security.events;
 
 import org.springframework.lang.NonNull;
 import ru.portal.entities.User;
-import ru.portal.entities.dto.request.DtoUserRequest;
+import ru.portal.entities.dto.request.auth.DtoUserRequest;
 
 /**
  * Интерфейс предоставляет методы связанные с событиями регистрацией

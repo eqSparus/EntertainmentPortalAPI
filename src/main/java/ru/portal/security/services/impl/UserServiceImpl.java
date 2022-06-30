@@ -16,7 +16,7 @@ import ru.portal.entities.Role;
 import ru.portal.entities.Status;
 import ru.portal.entities.User;
 import ru.portal.entities.auth.LoginAttempt;
-import ru.portal.entities.dto.request.DtoUserRequest;
+import ru.portal.entities.dto.request.auth.DtoUserRequest;
 import ru.portal.entities.dto.response.auth.DtoAuthenticationResponse;
 import ru.portal.entities.dto.response.auth.DtoSuccessRegResponse;
 import ru.portal.repositories.UserRepository;
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
      * @param request тело запроса.
      * @return ответ об успешной аутентификации.
      * @throws UserExistsException бросаеться если пользователь уже существует в системе.
-     * @see ru.portal.entities.dto.request.DtoUserRequest
+     * @see DtoUserRequest
      * @see DtoSuccessRegResponse
      * @see ru.portal.security.events.RegistrationUserEvent
      */
@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
      * @throws IncorrectCredentialsException бросаеться если данные пользователя неверны.
      * @throws UserBannedException           бросаеться если пользователь заблокирован.
      * @see DtoAuthenticationResponse
-     * @see ru.portal.entities.dto.request.DtoUserRequest
+     * @see DtoUserRequest
      * @see ru.portal.security.events.LoginUserEvent
      */
     @NonNull

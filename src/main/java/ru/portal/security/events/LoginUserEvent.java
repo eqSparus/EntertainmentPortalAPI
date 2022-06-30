@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.lang.NonNull;
-import ru.portal.entities.dto.request.DtoUserRequest;
+import ru.portal.entities.dto.request.auth.DtoUserRequest;
 
 import java.time.Clock;
 

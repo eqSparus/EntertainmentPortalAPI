@@ -1,4 +1,4 @@
-package ru.portal.entities.dto.request;
+package ru.portal.entities.dto.request.auth;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

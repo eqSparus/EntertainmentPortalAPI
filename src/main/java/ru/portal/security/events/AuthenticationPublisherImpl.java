@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import ru.portal.entities.User;
-import ru.portal.entities.dto.request.DtoUserRequest;
+import ru.portal.entities.dto.request.auth.DtoUserRequest;
 
 /**
  * Издает события связаные с регистрацией и авторизацией пользователя

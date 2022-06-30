@@ -3,7 +3,7 @@ package ru.portal.security.services;
 import org.springframework.lang.NonNull;
 import ru.portal.entities.Status;
 import ru.portal.entities.User;
-import ru.portal.entities.dto.request.DtoUserRequest;
+import ru.portal.entities.dto.request.auth.DtoUserRequest;
 import ru.portal.entities.dto.response.auth.DtoAuthenticationResponse;
 import ru.portal.entities.dto.response.auth.DtoSuccessRegResponse;
 import ru.portal.security.services.exception.IncorrectCredentialsException;
@@ -23,7 +23,7 @@ public interface UserService {
      * @param request тело запроса.
      * @return ответ об успешной аутентификации.
      * @throws UserExistsException бросаеться если пользователь уже существует в системе.
-     * @see ru.portal.entities.dto.request.DtoUserRequest
+     * @see DtoUserRequest
      * @see DtoSuccessRegResponse
      */
     DtoSuccessRegResponse registrationUser(@NonNull DtoUserRequest request) throws UserExistsException;
@@ -36,7 +36,7 @@ public interface UserService {
      * @throws IncorrectCredentialsException бросаеться если данные пользователя неверны.
      * @throws UserBannedException           бросаеться если пользователь заблокирован.
      * @see DtoAuthenticationResponse
-     * @see ru.portal.entities.dto.request.DtoUserRequest
+     * @see DtoUserRequest
      */
     @NonNull
     DtoAuthenticationResponse login(@NonNull DtoUserRequest request)
