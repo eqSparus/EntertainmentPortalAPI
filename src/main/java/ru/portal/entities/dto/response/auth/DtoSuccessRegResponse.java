@@ -11,13 +11,13 @@ import java.time.OffsetDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Value
 @Builder
-public class DtoFailedResponse {
+public class DtoSuccessRegResponse {
 
     Integer status;
 
     String message;
 
-    String path;
+    Long userId;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     OffsetDateTime timestamp;

@@ -7,17 +7,18 @@ import lombok.Value;
 import lombok.experimental.FieldDefaults;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Value
 @Builder
-public class DtoSuccessAuthResponse {
+public class DtoFailedResponse {
 
     Integer status;
 
-    String message;
+    List<String> message;
 
-    Long userId;
+    String path;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     OffsetDateTime timestamp;
