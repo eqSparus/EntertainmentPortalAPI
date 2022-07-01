@@ -38,6 +38,9 @@ public class RefreshToken implements Serializable {
     @Column(name = "token", length = 80, unique = true)
     String token;
 
+    @Column(name = "lifetime")
+    Long lifetime;
+
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
     @JoinColumn(name = "user_id", updatable = false, nullable = false)
     User user;

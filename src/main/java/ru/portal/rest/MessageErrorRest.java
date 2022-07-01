@@ -25,7 +25,7 @@ public class MessageErrorRest {
     @ResponseStatus(code = HttpStatus.CONFLICT)
     @ExceptionHandler({UserExistsException.class, RefreshTokenNotExistsException.class,
             IncorrectCredentialsException.class, UserBannedException.class, TokenTimeExpiredException.class,
-            ConfirmationTokenNotExistException.class})
+            ConfirmationTokenNotExistException.class, RefreshTokenTimeUpException.class})
     public DtoFailedResponse getErrorMessage(Throwable throwable, HttpServletRequest request) {
         return DtoFailedResponse.builder()
                 .message(throwable.getMessage())

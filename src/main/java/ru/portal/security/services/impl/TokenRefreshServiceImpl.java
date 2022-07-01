@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,9 @@ import ru.portal.repositories.auth.RefreshTokenRepository;
 import ru.portal.security.services.TokenRefreshService;
 import ru.portal.security.services.TokenService;
 import ru.portal.security.services.exception.RefreshTokenNotExistsException;
+import ru.portal.security.services.exception.RefreshTokenTimeUpException;
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,13 +27,16 @@ import java.util.UUID;
  *
  * @author Федорышин К.В.
  */
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Service
 @Slf4j
 public class TokenRefreshServiceImpl implements TokenRefreshService {
 
-    RefreshTokenRepository refreshTokenRepository;
-    TokenService tokenService;
+    @Value("${security.token.validTimeRefreshTokenSecond}")
+    Long validTimeRefreshToken;
+
+    final RefreshTokenRepository refreshTokenRepository;
+    final TokenService tokenService;
 
     @Autowired
     public TokenRefreshServiceImpl(RefreshTokenRepository refreshTokenRepository,
@@ -40,34 +46,42 @@ public class TokenRefreshServiceImpl implements TokenRefreshService {
     }
 
     /**
-     * Проверяет токен обновления на существование, в случае усеха создает новый токен доступа
-     * и токен обновления и возвращает его в ответе.
+     * Проверяет токен обновления на существование и на время жизни, в случае усеха
+     * создает новый токен доступа и токен обновления и возвращает его в ответе.
      *
      * @param refreshToken токен обновления.
      * @return ответ обновления токена.
+     * @throws RefreshTokenTimeUpException    бросаеться если токен обновления истек
+     * @throws RefreshTokenNotExistsException бросаеться если токена обновления не существует
      * @see DtoAuthenticationResponse
      */
-    @Transactional(rollbackFor = RefreshTokenNotExistsException.class)
+    @Transactional(rollbackFor = RefreshTokenNotExistsException.class,
+            noRollbackFor = RefreshTokenTimeUpException.class)
     @NonNull
     @Override
     public DtoAuthenticationResponse refreshToken(@NonNull String refreshToken) {
         var refToken = refreshTokenRepository.findByToken(refreshToken)
                 .orElseThrow(RefreshTokenNotExistsException::new);
 
-        var newRefreshToken = UUID.randomUUID().toString();
-        refToken.setToken(newRefreshToken);
+        if (refToken.getLifetime() >= Instant.now().toEpochMilli()) {
+            var newRefreshToken = UUID.randomUUID().toString();
+            refToken.setToken(newRefreshToken);
 
-        var user = refToken.getUser();
+            var user = refToken.getUser();
+            refToken.setLifetime(Instant.now().plusSeconds(validTimeRefreshToken).toEpochMilli());
 
-        var token = tokenService.createToken(user.getUsername());
+            var token = tokenService.createToken(user.getUsername());
 
-        refreshTokenRepository.save(refToken);
+            refreshTokenRepository.save(refToken);
 
-        return DtoAuthenticationResponse.builder()
-                .authorization(token)
-                .refreshToken(newRefreshToken)
-                .timestamp(ZonedDateTime.now())
-                .build();
+            return DtoAuthenticationResponse.builder()
+                    .authorization(token)
+                    .refreshToken(newRefreshToken)
+                    .timestamp(ZonedDateTime.now())
+                    .build();
+        }
+        refreshTokenRepository.deleteByToken(refToken.getToken());
+        throw new RefreshTokenTimeUpException();
     }
 
 
@@ -81,8 +95,11 @@ public class TokenRefreshServiceImpl implements TokenRefreshService {
     public Optional<RefreshToken> addRefreshToken(@NonNull User user) {
         var refreshToken = UUID.randomUUID().toString();
 
+        var validTime = Instant.now().plusSeconds(validTimeRefreshToken).toEpochMilli();
+
         var tokenRefresh = RefreshToken.builder()
                 .token(refreshToken)
+                .lifetime(validTime)
                 .user(user)
                 .build();
 

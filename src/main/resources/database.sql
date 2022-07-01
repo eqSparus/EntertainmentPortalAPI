@@ -10,7 +10,7 @@ CREATE TABLE portal_shem.users
 (
     user_id   BIGSERIAL PRIMARY KEY,
     username  VARCHAR(32)  NOT NULL UNIQUE,
-    email     VARCHAR(60) NOT NULL UNIQUE,
+    email     VARCHAR(60)  NOT NULL UNIQUE,
     password  VARCHAR(200) NOT NULL,
     status    VARCHAR(20)  NOT NULL,
     role      VARCHAR(20)  NOT NULL,
@@ -32,6 +32,7 @@ CREATE TABLE portal_shem.refresh_tokens
 (
     token_id  BIGSERIAL PRIMARY KEY,
     token     VARCHAR(80) NOT NULL UNIQUE,
+    lifetime  BIGINT      NOT NULL,
     user_id   BIGINT REFERENCES portal_shem.users (user_id),
     create_at TIMESTAMPTZ NOT NULL,
     update_at TIMESTAMPTZ NOT NULL
