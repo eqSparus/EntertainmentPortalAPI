@@ -11,8 +11,10 @@ import org.springframework.security.authentication.event.AuthenticationSuccessEv
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.context.Context;
 import ru.portal.entities.Status;
 import ru.portal.entities.auth.ConfirmationToken;
+import ru.portal.mail.EmailService;
 import ru.portal.repositories.UserRepository;
 import ru.portal.repositories.auth.ConfirmationTokenRepository;
 import ru.portal.repositories.auth.LoginAttemptRepository;
@@ -44,16 +46,19 @@ public class AuthenticationListener {
     final LoginAttemptRepository attemptRepository;
     final UserService userService;
     final ConfirmationTokenRepository confirmationTokenRepository;
+    final EmailService emailService;
 
     @Autowired
     public AuthenticationListener(UserRepository userRepository,
                                   LoginAttemptRepository attemptRepository,
                                   UserService userService,
-                                  ConfirmationTokenRepository confirmationTokenRepository) {
+                                  ConfirmationTokenRepository confirmationTokenRepository,
+                                  EmailService emailService) {
         this.userRepository = userRepository;
         this.attemptRepository = attemptRepository;
         this.userService = userService;
         this.confirmationTokenRepository = confirmationTokenRepository;
+        this.emailService = emailService;
     }
 
     /**
@@ -153,8 +158,17 @@ public class AuthenticationListener {
                 .lifetime(Instant.now().plusSeconds(confirmationTime).toEpochMilli())
                 .user(user)
                 .build();
-        log.info("Отправка токена {}", confirmationToken.getToken());
+
         confirmationTokenRepository.save(confirmationToken);
-        //TODO отправка письма
+
+        var message = emailService.getHtmlMail("registrationUserEmail", () -> {
+            var context = new Context();
+            context.setVariable("username", user.getUsername());
+            context.setVariable("token", confirmationToken.getToken());
+            return context;
+        });
+
+        emailService.sendEmail(user.getEmail(), "Подтверждение регистрации", message);
+
     }
 }

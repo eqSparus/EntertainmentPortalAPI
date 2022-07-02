@@ -24,6 +24,19 @@ spring:
   main:
     lazy-initialization: false
     banner-mode: console
+  mail:
+    username: kot-1693@mail.ru
+    password: 8ySmHHXyLk17N3f8RxmU
+    port: 587
+    host: smtp.mail.ru
+    test-connection: false
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 server:
   port: 8080
