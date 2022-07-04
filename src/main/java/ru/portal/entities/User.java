@@ -40,10 +40,10 @@ public class User implements Serializable {
     @Column(name = "username", length = 32, unique = true)
     String username;
 
-    @Column(name = "email", length = 60, unique = true)
+    @Column(name = "email", length = 64, unique = true)
     String email;
 
-    @Column(name = "password", length = 200)
+    @Column(name = "password", length = 256)
     String password;
 
     @Enumerated(EnumType.STRING)

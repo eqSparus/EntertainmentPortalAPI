@@ -23,11 +23,11 @@ public class DtoUserRequest {
     @NotBlank(message = "Имя не должно быть пустым!")
     String username;
 
-    @Size(max = 60,message = "Электронный адрес не должен быть больше 60 символов")
+    @Size(max = 64,message = "Электронный адрес не должен быть больше 64 символов")
     @Email(message = "Это не адрес электронной почты!")
     String email;
 
-    @Size(min = 8, max = 60, message = "Пароль не должен быть меньше 8 и больше 60 символов")
+    @Size(min = 8, max = 64, message = "Пароль не должен быть меньше 8 и больше 64 символов")
     @NotBlank(message = "Пароль не долежн быть пустым")
     String password;
 

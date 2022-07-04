@@ -23,13 +23,24 @@ import java.time.OffsetDateTime;
 public class MessageErrorRest {
 
     @ResponseStatus(code = HttpStatus.CONFLICT)
-    @ExceptionHandler({UserExistsException.class, RefreshTokenNotExistsException.class,
-            IncorrectCredentialsException.class, UserBannedException.class, TokenTimeExpiredException.class,
-            ConfirmationTokenNotExistException.class, RefreshTokenTimeUpException.class})
+    @ExceptionHandler({UserExistsException.class, IncorrectCredentialsException.class,
+            ConfirmationTokenNotExistException.class})
     public DtoFailedResponse getErrorMessage(Throwable throwable, HttpServletRequest request) {
         return DtoFailedResponse.builder()
                 .message(throwable.getMessage())
                 .status(HttpStatus.CONFLICT.value())
+                .timestamp(OffsetDateTime.now())
+                .path(request.getContextPath() + request.getServletPath())
+                .build();
+    }
+
+    @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler({RefreshTokenNotExistsException.class, TokenTimeExpiredException.class,
+            UserBannedException.class, RefreshTokenTimeUpException.class})
+    public DtoFailedResponse getErrorMessageAuth(Throwable throwable, HttpServletRequest request) {
+        return DtoFailedResponse.builder()
+                .message(throwable.getMessage())
+                .status(HttpStatus.UNAUTHORIZED.value())
                 .timestamp(OffsetDateTime.now())
                 .path(request.getContextPath() + request.getServletPath())
                 .build();

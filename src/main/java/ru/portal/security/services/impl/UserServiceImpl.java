@@ -106,7 +106,6 @@ public class UserServiceImpl implements UserService {
             authenticationPublisher.publishEventRegistration(newUser);
 
             return DtoSuccessRegResponse.builder()
-                    .userId(newUser.getId())
                     .timestamp(OffsetDateTime.now())
                     .message("Пользователь зарегистрирован проверьте почту!")
                     .status(HttpStatus.CREATED.value())

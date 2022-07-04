@@ -10,8 +10,8 @@ CREATE TABLE portal_shem.users
 (
     user_id   BIGSERIAL PRIMARY KEY,
     username  VARCHAR(32)  NOT NULL UNIQUE,
-    email     VARCHAR(60)  NOT NULL UNIQUE,
-    password  VARCHAR(200) NOT NULL,
+    email     VARCHAR(64)  NOT NULL UNIQUE,
+    password  VARCHAR(256) NOT NULL,
     status    VARCHAR(20)  NOT NULL,
     role      VARCHAR(20)  NOT NULL,
     create_at TIMESTAMPTZ  NOT NULL,

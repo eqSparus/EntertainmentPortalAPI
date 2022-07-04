@@ -17,8 +17,6 @@ public class DtoSuccessRegResponse {
 
     String message;
 
-    Long userId;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     OffsetDateTime timestamp;
 

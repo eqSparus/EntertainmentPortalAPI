@@ -65,7 +65,7 @@ public class AuthenticationRest {
             @RequestParam(name = "username") String username
     ) {
         if (userService.checkUsername(username)) {
-            return ResponseEntity.status(HttpStatus.CONFLICT.value()).body("Username exist");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username exist");
         }
         return ResponseEntity.ok("Username not exist");
     }
@@ -75,7 +75,7 @@ public class AuthenticationRest {
             @RequestParam(name = "email") String email
     ) {
         if (userService.checkEmail(email)) {
-            return ResponseEntity.status(HttpStatus.CONFLICT.value()).body("Email exist");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email exist");
         }
         return ResponseEntity.ok("Email not exist");
     }
