@@ -1,7 +1,8 @@
 package ru.portal.security.services;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.lang.NonNull;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Интерфейс с методами для взаимодействия с токенами доступа

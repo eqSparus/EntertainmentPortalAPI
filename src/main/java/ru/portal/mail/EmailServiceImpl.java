@@ -1,7 +1,6 @@
 package ru.portal.mail;
 
 
-import jakarta.mail.MessagingException;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
 
+import javax.mail.MessagingException;
 import java.nio.charset.StandardCharsets;
 import java.util.function.Supplier;
 

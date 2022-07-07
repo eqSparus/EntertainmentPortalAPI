@@ -2,12 +2,13 @@ package ru.portal.entities.dto.request.auth;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Value;
 import lombok.experimental.FieldDefaults;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * Тело запроса при регистрации и авторизации пользователя.

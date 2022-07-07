@@ -1,6 +1,5 @@
 package ru.portal.rest;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.portal.entities.dto.response.auth.DtoFailedResponse;
 import ru.portal.security.services.exception.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.OffsetDateTime;
 
 /**
