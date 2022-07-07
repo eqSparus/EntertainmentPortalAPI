@@ -1,9 +1,9 @@
 package ru.portal.entities;
 
-import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 

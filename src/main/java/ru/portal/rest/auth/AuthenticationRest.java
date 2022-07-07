@@ -1,7 +1,6 @@
 package ru.portal.rest.auth;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,8 @@ import ru.portal.entities.dto.response.auth.DtoAuthenticationResponse;
 import ru.portal.entities.dto.response.auth.DtoSuccessRegResponse;
 import ru.portal.security.services.ConfirmationService;
 import ru.portal.security.services.UserService;
+
+import javax.validation.Valid;
 
 /**
  * Конечные точки для регистрации и аутентификации пользователя.

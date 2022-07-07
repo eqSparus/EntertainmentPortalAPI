@@ -1,10 +1,10 @@
 package ru.portal.entities.auth;
 
-import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ru.portal.entities.User;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
