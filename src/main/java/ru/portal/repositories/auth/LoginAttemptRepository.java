@@ -16,10 +16,6 @@ import java.util.Optional;
 @Repository
 public interface LoginAttemptRepository extends JpaRepository<LoginAttempt, Long> {
 
-    @NonNull
-    @Override
-    <S extends LoginAttempt> S save(@NonNull S entity);
-
     /**
      * Извлекает попытки входа пользователя по пользователю.
      *

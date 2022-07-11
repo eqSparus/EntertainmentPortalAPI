@@ -16,11 +16,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @NonNull
-    @Override
-    <S extends User> S save(@NonNull S entity);
-
-
     /**
      * Извлекает пользователя из БД по его адресу электронному адресу.
      *

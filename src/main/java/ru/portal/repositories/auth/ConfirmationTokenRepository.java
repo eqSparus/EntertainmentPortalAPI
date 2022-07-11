@@ -15,10 +15,6 @@ import java.util.Optional;
 @Repository
 public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, Long> {
 
-    @NonNull
-    @Override
-    <S extends ConfirmationToken> S save(@NonNull S entity);
-
     /**
      * Извлекает токен подтверждения регистрации из хранилища данных.
      *

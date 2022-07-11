@@ -15,10 +15,6 @@ import java.util.Optional;
 @Repository
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
 
-    @NonNull
-    @Override
-    <S extends RefreshToken> S save(@NonNull S entity);
-
     /**
      * Извлекает токен обновления по токену обновления.
      *
