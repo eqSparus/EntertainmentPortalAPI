@@ -65,7 +65,6 @@ public class ConfirmationServiceImpl implements ConfirmationService {
                     .status(HttpStatus.OK.value())
                     .message("Пользователь активирован")
                     .timestamp(OffsetDateTime.now())
-                    .userId(confirmationToken.getUser().getId())
                     .build();
         } else {
             confirmationRepository.deleteByToken(token);
