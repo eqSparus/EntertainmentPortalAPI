@@ -41,4 +41,5 @@ public interface TokenRefreshService {
      */
     void deleteRefreshToken(@NonNull String token);
 
+    boolean isLifetimeRefreshToken(@NonNull RefreshToken token);
 }

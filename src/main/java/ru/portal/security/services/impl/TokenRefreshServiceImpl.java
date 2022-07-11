@@ -48,6 +48,7 @@ public class TokenRefreshServiceImpl implements TokenRefreshService {
     /**
      * Проверяет токен обновления на существование и на время жизни, в случае усеха
      * создает новый токен доступа и токен обновления и возвращает его в ответе.
+     * Если время токена обновления вышло удаляет его из БД и выкидывает исключение.
      *
      * @param refreshToken токен обновления.
      * @return ответ обновления токена.
@@ -63,7 +64,7 @@ public class TokenRefreshServiceImpl implements TokenRefreshService {
         var refToken = refreshTokenRepository.findByToken(refreshToken)
                 .orElseThrow(RefreshTokenNotExistsException::new);
 
-        if (refToken.getLifetime() >= Instant.now().toEpochMilli()) {
+        if (isLifetimeRefreshToken(refToken)) {
             var newRefreshToken = UUID.randomUUID().toString();
             refToken.setToken(newRefreshToken);
 
@@ -80,7 +81,7 @@ public class TokenRefreshServiceImpl implements TokenRefreshService {
                     .timestamp(ZonedDateTime.now())
                     .build();
         }
-        refreshTokenRepository.deleteByToken(refToken.getToken());
+        deleteRefreshToken(refToken.getToken());
         throw new RefreshTokenTimeUpException();
     }
 
@@ -115,5 +116,10 @@ public class TokenRefreshServiceImpl implements TokenRefreshService {
     @Override
     public void deleteRefreshToken(@NonNull String token) {
         refreshTokenRepository.deleteByToken(token);
+    }
+
+    @Override
+    public boolean isLifetimeRefreshToken(@NonNull RefreshToken token) {
+        return token.getLifetime() >= Instant.now().toEpochMilli();
     }
 }

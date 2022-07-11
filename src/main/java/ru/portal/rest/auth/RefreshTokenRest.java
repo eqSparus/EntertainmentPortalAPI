@@ -21,14 +21,14 @@ import ru.portal.security.services.UserService;
  */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RestController
-public class TokenRest {
+public class RefreshTokenRest {
 
     UserService userService;
 
     TokenRefreshService refreshService;
 
     @Autowired
-    public TokenRest(UserService userService, TokenRefreshService refreshService) {
+    public RefreshTokenRest(UserService userService, TokenRefreshService refreshService) {
         this.userService = userService;
         this.refreshService = refreshService;
     }
