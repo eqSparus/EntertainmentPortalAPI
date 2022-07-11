@@ -24,7 +24,8 @@ public class DtoAuthenticationResponse {
 
     @JsonView(Views.RefreshToken.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    ZonedDateTime timestamp;
+    @Builder.Default
+    ZonedDateTime timestamp = ZonedDateTime.now();
 
     @JsonView(Views.Login.class)
     String username;

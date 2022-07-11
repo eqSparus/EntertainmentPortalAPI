@@ -18,7 +18,6 @@ import ru.portal.security.services.exception.RefreshTokenNotExistsException;
 import ru.portal.security.services.exception.RefreshTokenTimeUpException;
 
 import java.time.Instant;
-import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -78,7 +77,6 @@ public class TokenRefreshServiceImpl implements TokenRefreshService {
             return DtoAuthenticationResponse.builder()
                     .authorization(token)
                     .refreshToken(newRefreshToken)
-                    .timestamp(ZonedDateTime.now())
                     .build();
         }
         deleteRefreshToken(refToken.getToken());

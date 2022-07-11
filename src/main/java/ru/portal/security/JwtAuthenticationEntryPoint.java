@@ -15,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.OffsetDateTime;
 
 /**
  * Конечная точка на которую будут перенаправляться неавторизованые запросы
@@ -47,7 +46,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .message(MESSAGE)
                 .path(request.getContextPath() + request.getServletPath())
-                .timestamp(OffsetDateTime.now())
                 .build();
 
         mapper.writeValue(response.getOutputStream(), dtoResponse);

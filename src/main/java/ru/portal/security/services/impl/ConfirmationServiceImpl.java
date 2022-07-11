@@ -17,7 +17,6 @@ import ru.portal.security.services.exception.ConfirmationTokenNotExistException;
 import ru.portal.security.services.exception.TokenTimeExpiredException;
 
 import java.time.Instant;
-import java.time.OffsetDateTime;
 
 /**
  * Реализация интерфейса {@link ConfirmationService} для подтверждения электронной
@@ -66,7 +65,6 @@ public class ConfirmationServiceImpl implements ConfirmationService {
             return DtoSuccessRegResponse.builder()
                     .status(HttpStatus.OK.value())
                     .message("Пользователь активирован")
-                    .timestamp(OffsetDateTime.now())
                     .build();
         } else {
             confirmationRepository.deleteByToken(token);

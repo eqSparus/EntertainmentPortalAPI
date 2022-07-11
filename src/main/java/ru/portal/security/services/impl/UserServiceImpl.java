@@ -30,8 +30,6 @@ import ru.portal.security.services.exception.UserBannedException;
 import ru.portal.security.services.exception.UserExistsException;
 
 import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
 
 /**
  * Реализация интерфейса {@link UserService} для взаимодействия
@@ -106,7 +104,6 @@ public class UserServiceImpl implements UserService {
             authenticationPublisher.publishEventRegistration(newUser);
 
             return DtoSuccessRegResponse.builder()
-                    .timestamp(OffsetDateTime.now())
                     .message("Пользователь зарегистрирован проверьте почту!")
                     .status(HttpStatus.CREATED.value())
                     .build();
@@ -156,7 +153,6 @@ public class UserServiceImpl implements UserService {
                     .authorization(token)
                     .role(user.getRole())
                     .refreshToken(refreshToken)
-                    .timestamp(ZonedDateTime.now())
                     .build();
 
         } catch (BadCredentialsException e) {

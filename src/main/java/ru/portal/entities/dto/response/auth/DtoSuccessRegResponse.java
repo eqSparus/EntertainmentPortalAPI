@@ -18,6 +18,7 @@ public class DtoSuccessRegResponse {
     String message;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    OffsetDateTime timestamp;
+    @Builder.Default
+    OffsetDateTime timestamp = OffsetDateTime.now();
 
 }

@@ -11,7 +11,6 @@ import ru.portal.entities.dto.response.auth.DtoFailedResponse;
 import ru.portal.security.services.exception.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.OffsetDateTime;
 
 /**
  * Обработчик ошибок.
@@ -29,7 +28,6 @@ public class MessageErrorRest {
         return DtoFailedResponse.builder()
                 .message(throwable.getMessage())
                 .status(HttpStatus.CONFLICT.value())
-                .timestamp(OffsetDateTime.now())
                 .path(request.getContextPath() + request.getServletPath())
                 .build();
     }
@@ -41,7 +39,6 @@ public class MessageErrorRest {
         return DtoFailedResponse.builder()
                 .message(throwable.getMessage())
                 .status(HttpStatus.UNAUTHORIZED.value())
-                .timestamp(OffsetDateTime.now())
                 .path(request.getContextPath() + request.getServletPath())
                 .build();
     }
@@ -54,7 +51,6 @@ public class MessageErrorRest {
         return DtoFailedResponse.builder()
                 .message(e.getBindingResult().getFieldError().getDefaultMessage())
                 .status(HttpStatus.BAD_REQUEST.value())
-                .timestamp(OffsetDateTime.now())
                 .path(request.getContextPath() + request.getServletPath())
                 .build();
     }

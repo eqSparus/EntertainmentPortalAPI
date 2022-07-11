@@ -19,7 +19,8 @@ public class DtoFailedResponse {
 
     String path;
 
+    @Builder.Default
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    OffsetDateTime timestamp;
+    OffsetDateTime timestamp = OffsetDateTime.now();
 
 }
