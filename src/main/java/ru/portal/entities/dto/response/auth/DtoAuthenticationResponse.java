@@ -36,12 +36,5 @@ public class DtoAuthenticationResponse {
     @JsonView(Views.Login.class)
     Role role;
 
-    @JsonView(Views.Login.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    ZonedDateTime createAt;
-
-    @JsonView(Views.Login.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    ZonedDateTime updateAt;
 
 }

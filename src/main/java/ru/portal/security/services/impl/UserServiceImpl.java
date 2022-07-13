@@ -148,8 +148,6 @@ public class UserServiceImpl implements UserService {
             return DtoAuthenticationResponse.builder()
                     .username(user.getUsername())
                     .email(user.getEmail())
-                    .createAt(user.getCreateAt())
-                    .updateAt(user.getUpdateAt())
                     .authorization(token)
                     .role(user.getRole())
                     .refreshToken(refreshToken)
