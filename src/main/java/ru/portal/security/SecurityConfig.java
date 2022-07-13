@@ -23,6 +23,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
+import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -80,10 +81,17 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .cors(corsConfig -> corsConfig.configurationSource(corsConfigurationSource()))
-                .headers()
-                .xssProtection()
-                .and()
-                .contentSecurityPolicy(environment.getRequiredProperty("security.contentPolicy"));
+                .headers(headersConfig -> headersConfig.frameOptions().deny()
+                        .xssProtection()
+                        .block(false)
+                        .and()
+                        .contentSecurityPolicy(environment.getRequiredProperty("security.contentPolicy"))
+                        .and()
+                        .contentTypeOptions()
+                        .and()
+                        .referrerPolicy()
+                        .policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN));
+
 
         http.csrf().disable().httpBasic().disable();
 

@@ -6,23 +6,23 @@ package ru.portal.security.services.exception;
  *
  * @author Федорышин К.В.
  */
-public class TokenTimeExpiredException extends RuntimeException {
+public class ConfirmationTokenTimeExpiredException extends RuntimeException {
 
     static String MESSAGE = "Время жизни токена истекло";
 
-    public TokenTimeExpiredException() {
+    public ConfirmationTokenTimeExpiredException() {
         super(MESSAGE);
     }
 
-    public TokenTimeExpiredException(String message) {
+    public ConfirmationTokenTimeExpiredException(String message) {
         super(message);
     }
 
-    public TokenTimeExpiredException(String message, Throwable cause) {
+    public ConfirmationTokenTimeExpiredException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public TokenTimeExpiredException(Throwable cause) {
+    public ConfirmationTokenTimeExpiredException(Throwable cause) {
         super(MESSAGE, cause);
     }
 }

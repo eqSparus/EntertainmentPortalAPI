@@ -14,7 +14,7 @@ import ru.portal.repositories.auth.ConfirmationTokenRepository;
 import ru.portal.security.services.ConfirmationService;
 import ru.portal.security.services.UserService;
 import ru.portal.security.services.exception.ConfirmationTokenNotExistException;
-import ru.portal.security.services.exception.TokenTimeExpiredException;
+import ru.portal.security.services.exception.ConfirmationTokenTimeExpiredException;
 
 import java.time.Instant;
 
@@ -43,18 +43,18 @@ public class ConfirmationServiceImpl implements ConfirmationService {
      * Проверяет токен на существования и время жизни пользователя, в случае успеха
      * удаляет токен подтверждения из БД и активирует учетную запись пользователя.
      * Если время жизни токена подтверждения истекло то удаляет его из БД и выбрасывает исключения
-     * {@link TokenTimeExpiredException}
+     * {@link ConfirmationTokenTimeExpiredException}
      *
      * @param token подтверждения электронной почты.
      * @return ответ подтверждения.
      * @throws ConfirmationTokenNotExistException бросаеться если токена подтверждение не существутет.
-     * @throws TokenTimeExpiredException бросаеться если срок действия токена истек.
+     * @throws ConfirmationTokenTimeExpiredException бросаеться если срок действия токена истек.
      * @see DtoSuccessRegResponse
      */
     @Transactional
     @Override
     public DtoSuccessRegResponse confirmation(@NonNull String token)
-            throws ConfirmationTokenNotExistException, TokenTimeExpiredException {
+            throws ConfirmationTokenNotExistException, ConfirmationTokenTimeExpiredException {
 
         var confirmationToken = confirmationRepository.findByToken(token)
                 .orElseThrow(ConfirmationTokenNotExistException::new);
@@ -68,7 +68,7 @@ public class ConfirmationServiceImpl implements ConfirmationService {
                     .build();
         } else {
             confirmationRepository.deleteByToken(token);
-            throw new TokenTimeExpiredException();
+            throw new ConfirmationTokenTimeExpiredException();
         }
 
     }
