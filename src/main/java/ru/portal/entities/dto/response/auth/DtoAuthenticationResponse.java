@@ -1,13 +1,10 @@
 package ru.portal.entities.dto.response.auth;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Value;
 import lombok.experimental.FieldDefaults;
-import ru.portal.entities.Role;
-import ru.portal.entities.dto.Views;
 
 import java.time.ZonedDateTime;
 
@@ -16,25 +13,12 @@ import java.time.ZonedDateTime;
 @Builder
 public class DtoAuthenticationResponse {
 
-    @JsonView(Views.RefreshToken.class)
     String authorization;
 
-    @JsonView(Views.RefreshToken.class)
     String refreshToken;
 
-    @JsonView(Views.RefreshToken.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @Builder.Default
     ZonedDateTime timestamp = ZonedDateTime.now();
-
-    @JsonView(Views.Login.class)
-    String username;
-
-    @JsonView(Views.Login.class)
-    String email;
-
-    @JsonView(Views.Login.class)
-    Role role;
-
 
 }

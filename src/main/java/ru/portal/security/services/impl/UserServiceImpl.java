@@ -85,6 +85,7 @@ public class UserServiceImpl implements UserService {
 
         var user = userRepository.findByUsernameOrEmail(request.getUsername(), request.getEmail());
 
+
         if (user.isEmpty()) {
 
             var newUser = User.builder()
@@ -146,10 +147,7 @@ public class UserServiceImpl implements UserService {
                     .getToken();
 
             return DtoAuthenticationResponse.builder()
-                    .username(user.getUsername())
-                    .email(user.getEmail())
                     .authorization(token)
-                    .role(user.getRole())
                     .refreshToken(refreshToken)
                     .build();
 

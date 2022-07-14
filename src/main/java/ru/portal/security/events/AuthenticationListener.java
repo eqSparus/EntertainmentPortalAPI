@@ -19,9 +19,9 @@ import ru.portal.repositories.UserRepository;
 import ru.portal.repositories.auth.ConfirmationTokenRepository;
 import ru.portal.repositories.auth.LoginAttemptRepository;
 import ru.portal.security.services.UserService;
+import ru.portal.security.utilities.RandomToken;
 
 import java.time.Instant;
-import java.util.UUID;
 
 /**
  * Слушатели для событий авторизации и регистрации
@@ -154,7 +154,7 @@ public class AuthenticationListener {
         var user = event.getUser();
 
         var confirmationToken = ConfirmationToken.builder()
-                .token(UUID.randomUUID().toString())
+                .token(RandomToken.getToken())
                 .lifetime(Instant.now().plusSeconds(confirmationTime).toEpochMilli())
                 .user(user)
                 .build();

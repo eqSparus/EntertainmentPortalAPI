@@ -16,10 +16,10 @@ import ru.portal.security.services.TokenRefreshService;
 import ru.portal.security.services.TokenService;
 import ru.portal.security.services.exception.RefreshTokenNotExistsException;
 import ru.portal.security.services.exception.RefreshTokenTimeUpException;
+import ru.portal.security.utilities.RandomToken;
 
 import java.time.Instant;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Реализация интерфейса {@link TokenRefreshService} для токенов обновления.
@@ -64,7 +64,7 @@ public class TokenRefreshServiceImpl implements TokenRefreshService {
                 .orElseThrow(RefreshTokenNotExistsException::new);
 
         if (isLifetimeRefreshToken(refToken)) {
-            var newRefreshToken = UUID.randomUUID().toString();
+            var newRefreshToken = RandomToken.getToken();
             refToken.setToken(newRefreshToken);
 
             var user = refToken.getUser();
@@ -92,7 +92,7 @@ public class TokenRefreshServiceImpl implements TokenRefreshService {
      */
     @Override
     public Optional<RefreshToken> addRefreshToken(@NonNull User user) {
-        var refreshToken = UUID.randomUUID().toString();
+        var refreshToken = RandomToken.getToken();
 
         var validTime = Instant.now().plusSeconds(validTimeRefreshToken).toEpochMilli();
 

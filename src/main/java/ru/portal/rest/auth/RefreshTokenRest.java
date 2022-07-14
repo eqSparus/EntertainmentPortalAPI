@@ -1,6 +1,5 @@
 package ru.portal.rest.auth;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
-import ru.portal.entities.dto.Views;
 import ru.portal.entities.dto.response.auth.DtoAuthenticationResponse;
 import ru.portal.security.services.TokenRefreshService;
 import ru.portal.security.services.UserService;
@@ -42,7 +40,6 @@ public class RefreshTokenRest {
     }
 
     @PostMapping(path = "/refreshtoken", produces = MediaType.APPLICATION_JSON_VALUE)
-    @JsonView(Views.RefreshToken.class)
     public DtoAuthenticationResponse refreshToken(
             @RequestHeader(name = "RefreshToken") String refreshToken
     ) {

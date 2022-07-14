@@ -1,6 +1,5 @@
 package ru.portal.rest.auth;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.portal.entities.dto.Views;
 import ru.portal.entities.dto.request.auth.DtoUserRequest;
 import ru.portal.entities.dto.response.auth.DtoAuthenticationResponse;
 import ru.portal.entities.dto.response.auth.DtoSuccessRegResponse;
@@ -47,7 +45,6 @@ public class AuthenticationRest {
 
     @PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    @JsonView(Views.Login.class)
     public DtoAuthenticationResponse login(
             @Valid @RequestBody DtoUserRequest request
     ) {

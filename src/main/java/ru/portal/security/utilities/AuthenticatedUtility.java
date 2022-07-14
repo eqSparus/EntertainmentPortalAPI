@@ -15,7 +15,7 @@ import java.util.Objects;
  * @author Федорышин К.В.
  */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class AuthenticatedUtility {
+public final class AuthenticatedUtility {
 
     private AuthenticatedUtility() {
 
