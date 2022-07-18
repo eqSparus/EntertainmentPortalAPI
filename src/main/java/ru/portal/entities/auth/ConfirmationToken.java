@@ -19,7 +19,7 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "confirmation_tokens", schema = "portal_shem", catalog = "db_portal",
+@Table(name = "confirmation_tokens", schema = "portal_schema",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "token"),
                 @UniqueConstraint(columnNames = "user_id"),

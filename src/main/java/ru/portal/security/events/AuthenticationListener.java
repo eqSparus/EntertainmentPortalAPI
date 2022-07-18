@@ -36,7 +36,7 @@ public class AuthenticationListener {
     @Value("${security.confirmation.lifetimeInSecond}")
     Long confirmationTime;
 
-    @Value("${security.blocking.blockingPeriod}")
+    @Value("${security.blocking.blockingPeriodInSecond}")
     Long blockingPeriod;
 
     @Value("${security.blocking.maxAttempts}")

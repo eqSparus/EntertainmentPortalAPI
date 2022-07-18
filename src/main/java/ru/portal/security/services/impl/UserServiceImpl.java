@@ -154,7 +154,7 @@ public class UserServiceImpl implements UserService {
         } catch (BadCredentialsException e) {
             throw new IncorrectCredentialsException(e);
         } catch (LockedException e) {
-            throw new UserBannedException("Пользователь заблокирован на один час!", e);
+            throw new UserBannedException("Пользователь заблокирован на 5 минут!", e);
         }
     }
 

@@ -18,7 +18,7 @@ import java.time.ZonedDateTime;
 @Builder
 @Data
 @Entity
-@Table(name = "users", catalog = "db_portal", schema = "portal_shem",
+@Table(name = "users", schema = "portal_schema",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "username"),
                 @UniqueConstraint(columnNames = "email")
