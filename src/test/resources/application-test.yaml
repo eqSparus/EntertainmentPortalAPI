@@ -20,3 +20,4 @@ spring:
         highlight_sql: true
         dialect: org.hibernate.dialect.H2Dialect
         default_schema: portal_schema
+    defer-datasource-initialization: true
