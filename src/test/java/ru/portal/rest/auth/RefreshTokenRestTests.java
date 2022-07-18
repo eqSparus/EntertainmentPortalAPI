@@ -1,2 +1,4 @@
-package ru.portal.rest.auth;public class RefreshTokenRestTest {
+package ru.portal.rest.auth;
+
+public class RefreshTokenRestTests {
 }

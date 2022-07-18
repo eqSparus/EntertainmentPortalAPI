@@ -1,2 +1,4 @@
-package ru.portal.repositories.auth;public class ConfirmationTokenRepositoryTest {
+package ru.portal.repositories.auth;
+
+public class ConfirmationTokenRepositoryTest {
 }

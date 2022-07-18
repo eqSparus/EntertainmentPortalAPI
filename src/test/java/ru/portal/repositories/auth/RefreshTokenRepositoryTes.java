@@ -1,2 +1,4 @@
-package ru.portal.repositories.auth;public class RefreshTokenRepositoryTes {
+package ru.portal.repositories.auth;
+
+public class RefreshTokenRepositoryTes {
 }

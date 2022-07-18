@@ -1,21 +1,22 @@
 spring:
-  application:
-    name:
-      Spring Boot Rest API  datasource:
-        type:
-          url: "jdbc:h2:mem:test-api;INIT=CREATE SCHEMA IF NOT EXISTS dbo\\;CREATE SCHEMA IF NOT EXISTS definitions;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false;MODE=MSSQLServer"
-          name:
-            password:
-              username:
-                initialization-mode:
-                  never    hikari:
-                    schema:
-                      dbo  jpa:
-                        database:
-                          H2    database-platform:
-                            org.hibernate.dialect.H2Dialect    show-sql:
-                              true    hibernate:
-                                ddl-auto:
-                                  create-drop  test:
-                                    database:
-                                      replace: none
+  sql:
+    init:
+      schema-locations: classpath:schema.sql
+      platform: h2
+  datasource:
+    username: sa
+    password:
+    url: jdbc:h2:mem:test_db;SCHEMA=portal_schema
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: h2
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: true
+        use_sql_comments: true
+        highlight_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+        default_schema: portal_schema
