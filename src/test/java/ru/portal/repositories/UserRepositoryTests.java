@@ -9,10 +9,10 @@ import org.springframework.test.context.jdbc.Sql;
 import ru.portal.entities.Role;
 import ru.portal.entities.Status;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Sql(scripts = "/sql/user_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @DataJpaTest
 class UserRepositoryTests {
     private final UserRepository userRepository;
@@ -25,39 +25,59 @@ class UserRepositoryTests {
     }
 
     @Test
-    void testFindUserByUsernameAndFindUserByEmail() {
+    void testFindUserByUsername() {
 
-        var userUsername = userRepository.findByUsername("Sparus")
+        var user = userRepository.findByUsername("Sparus")
                 .orElseThrow(IllegalArgumentException::new);
 
-        assertEquals(1, userUsername.getId(), "Идентификаторы должны совпадать");
-        assertEquals("Sparus", userUsername.getUsername(), "Имена должны совпадать");
-        assertEquals("rf1991@mail.ru", userUsername.getEmail(), "Адреса должны совпадать");
-        assertEquals(Role.USER, userUsername.getRole(), "Адреса должны совпадать");
-        assertEquals(Status.ACTIVE, userUsername.getStatus(), "Статусы должны совпадать");
-        assertTrue(encoder.matches("rootroot", userUsername.getPassword()), "Необработанный пароль " +
-                "должен совпадать с закодированым");
+        assertAll(
+                () -> assertEquals(1, user.getId(),
+                        "Идентификаторы должны совпадать"),
+                () -> assertEquals("Sparus", user.getUsername(),
+                        "Имена должны совпадать"),
+                () -> assertEquals("rf1991@mail.ru", user.getEmail(),
+                        "Адреса должны совпадать"),
+                () -> assertEquals(Role.USER, user.getRole(),
+                        "Адреса должны совпадать"),
+                () -> assertEquals(Status.AWAIT, user.getStatus(),
+                        "Статусы должны совпадать"),
+                () -> assertTrue(encoder.matches("rootroot", user.getPassword()),
+                        "Необработанный пароль должен совпадать с закодированым")
+        );
 
-        var userEmail = userRepository.findByEmail("rf1991@mail.ru")
-                .orElseThrow(IllegalArgumentException::new);
-
-        assertEquals(1, userEmail.getId(), "Идентификаторы должны совпадать");
-        assertEquals("Sparus", userEmail.getUsername(), "Имена должны совпадать");
-        assertEquals("rf1991@mail.ru", userEmail.getEmail(), "Адреса должны совпадать");
-        assertEquals(Role.USER, userEmail.getRole(), "Адреса должны совпадать");
-        assertEquals(Status.ACTIVE, userEmail.getStatus(), "Статусы должны совпадать");
-        assertTrue(encoder.matches("rootroot", userEmail.getPassword()), "Необработанный пароль " +
-                "должен совпадать с закодированым");
     }
 
     @Test
-    void testExistsEmailAndUsername() {
+    void testFindUserByEmail() {
+        var user = userRepository.findByEmail("rf1991@mail.ru")
+                .orElseThrow(IllegalArgumentException::new);
 
-        var usernameExist = userRepository.existsByEmail("rf1991@mail.ru");
-        assertTrue(usernameExist, "Адрес должен существовать");
+        assertAll(
+                () -> assertEquals(1, user.getId(),
+                        "Идентификаторы должны совпадать"),
+                () -> assertEquals("Sparus", user.getUsername(),
+                        "Имена должны совпадать"),
+                () -> assertEquals("rf1991@mail.ru", user.getEmail(),
+                        "Адреса должны совпадать"),
+                () -> assertEquals(Role.USER, user.getRole(),
+                        "Адреса должны совпадать"),
+                () -> assertEquals(Status.AWAIT, user.getStatus(),
+                        "Статусы должны совпадать"),
+                () -> assertTrue(encoder.matches("rootroot", user.getPassword()),
+                        "Необработанный пароль должен совпадать с закодированым")
+        );
+    }
 
-        var emailExist = userRepository.existsByUsername("Sparus");
-        assertTrue(emailExist, "Имя должно существовать");
+    @Test
+    void testExistsEmail() {
+        var exists = userRepository.existsByUsername("Sparus");
+        assertTrue(exists, "Имя должно существовать");
+    }
+
+    @Test
+    void testExistsUsername() {
+        var exists = userRepository.existsByEmail("rf1991@mail.ru");
+        assertTrue(exists, "Адрес должен существовать");
     }
 
 }

@@ -21,3 +21,7 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
         default_schema: portal_schema
     defer-datasource-initialization: true
+
+security:
+  token:
+    key: security.token.key=There_must_be_a_huge_secret_word_here_but_I_can't_think_of_it.

@@ -1,0 +1,2 @@
+INSERT INTO portal_schema.attempts_login(attempt_id, number_attempts, lock_time, create_at, update_at, user_id)
+VALUES (1, 2, 4088238925000, '2022-07-14 11:16:07.456196 +00:00', '2022-07-15 12:21:11.675550 +00:00', 1);
