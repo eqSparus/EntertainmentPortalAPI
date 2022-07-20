@@ -12,6 +12,7 @@ import ru.portal.entities.Status;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Sql(scripts = "/sql/user_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @DataJpaTest
 class UserRepositoryTests {
     private final UserRepository userRepository;
@@ -38,7 +39,7 @@ class UserRepositoryTests {
                         "Адреса должны совпадать"),
                 () -> assertEquals(Role.USER, user.getRole(),
                         "Адреса должны совпадать"),
-                () -> assertEquals(Status.ACTIVE, user.getStatus(),
+                () -> assertEquals(Status.AWAIT, user.getStatus(),
                         "Статусы должны совпадать"),
                 () -> assertTrue(encoder.matches("rootroot", user.getPassword()),
                         "Необработанный пароль должен совпадать с закодированым")
@@ -60,7 +61,7 @@ class UserRepositoryTests {
                         "Адреса должны совпадать"),
                 () -> assertEquals(Role.USER, user.getRole(),
                         "Адреса должны совпадать"),
-                () -> assertEquals(Status.ACTIVE, user.getStatus(),
+                () -> assertEquals(Status.AWAIT, user.getStatus(),
                         "Статусы должны совпадать"),
                 () -> assertTrue(encoder.matches("rootroot", user.getPassword()),
                         "Необработанный пароль должен совпадать с закодированым")

@@ -9,8 +9,10 @@ import ru.portal.entities.User;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
 @Sql(scripts = {"/sql/user_test.sql", "/sql/auth/login_attempt_test.sql"},
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @DataJpaTest
 class LoginAttemptRepositoryTests {
 

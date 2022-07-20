@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Sql(scripts = {"/sql/user_test.sql", "/sql/auth/confirmation_token_test.sql"},
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @DataJpaTest
 class ConfirmationTokenRepositoryTests {
 
@@ -30,9 +31,9 @@ class ConfirmationTokenRepositoryTests {
         assertAll(
                 () -> assertEquals(1, token.getId(),
                         "Идентификаторы должны совпадать"),
-                () -> assertEquals("cb0eb42fe1fd4d6397143da246a4132b", token.getToken(),
+                () -> assertEquals(TOKEN, token.getToken(),
                         "Токен должен совпадать"),
-                () -> assertEquals(1658164494, token.getLifetime(),
+                () -> assertEquals(4_088_238_925_000L, token.getLifetime(),
                         "Время жизни должно совпадать"),
                 () -> assertEquals(1, token.getUser().getId(),
                         "Идентификатор пользователя должен совпадать")

@@ -10,6 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.test.context.TestPropertySource;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,9 +19,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestPropertySource(value = "classpath:application-test.yaml")
 class TokenServiceTests {
 
-    private static final Pattern regexTokenWithBearer = Pattern
+    private static final Pattern REGEX_TOKEN_WITH_BEARER = Pattern
             .compile("Bearer_([\\w_=]+)\\.([\\w_=]+)\\.([\\w_\\-\\+\\/=]*)");
-    private static final Pattern regexToken = Pattern.compile("([\\w_=]+)\\.([\\w_=]+)\\.([\\w_\\-\\+\\/=]*)");
+    private static final Pattern REGEX_TOKEN = Pattern.compile("([\\w_=]+)\\.([\\w_=]+)\\.([\\w_\\-\\+\\/=]*)");
     private static final String USERNAME = "Sparus";
 
     private final TokenService tokenService;
@@ -41,32 +42,36 @@ class TokenServiceTests {
     @Test
     void testCreateToken() {
         var token = tokenService.createToken(USERNAME);
-        assertTrue(token.matches(regexTokenWithBearer.toString()),
+        assertTrue(token.matches(REGEX_TOKEN_WITH_BEARER.toString()),
                 "Токен должен соответствовать регулярному выражению");
 
         var validTime = jwtParser.parseClaimsJws(token.substring(7))
                 .getBody().getExpiration();
 
         assertNotNull(validTime, "Время жизни токена должно присутствовать");
+        assertTrue(Instant.now().isBefore(validTime.toInstant()),
+                "Проверяет что время жизни токена больше текущего момента времени");
     }
 
     @Test
     void testCreateTokenWithValidTime() {
         var token = tokenService.createToken(USERNAME, 10_000L);
-        assertTrue(token.matches(regexTokenWithBearer.toString()),
+        assertTrue(token.matches(REGEX_TOKEN_WITH_BEARER.toString()),
                 "Токен должен соответствовать регулярному выражению");
 
         var validTime = jwtParser.parseClaimsJws(token.substring(7))
                 .getBody().getExpiration();
 
         assertNotNull(validTime, "Время жизни токена должно присутствовать");
+        assertTrue(Instant.now().isBefore(validTime.toInstant()),
+                "Время жизни токена больше текущего момента времени");
     }
 
     @Test
     void testGetToken() {
         var tokenWithBearer = tokenService.createToken(USERNAME);
         var token = tokenService.getToken(tokenWithBearer);
-        assertTrue(token.matches(regexToken.toString()),
+        assertTrue(token.matches(REGEX_TOKEN.toString()),
                 "Токен должен соответствовать регулярному выражению");
     }
 

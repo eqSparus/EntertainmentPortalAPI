@@ -7,8 +7,10 @@ import org.springframework.test.context.jdbc.Sql;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 @Sql(scripts = {"/sql/user_test.sql", "/sql/auth/refresh_token_repository_test.sql"},
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @DataJpaTest
 class RefreshTokenRepositoryTests {
 
@@ -32,7 +34,7 @@ class RefreshTokenRepositoryTests {
                         "Идентификаторы должны совпадать"),
                 () -> assertEquals("cbbnb42fe1f4fgd697143da246a4132b", token.getToken(),
                         "Токен должен совпадать"),
-                () -> assertEquals(12000, token.getLifetime(),
+                () -> assertEquals(4088238925000L, token.getLifetime(),
                         "Время жизни должно совпадать"),
                 () -> assertEquals(1, token.getUser().getId(),
                         "Идентификатор пользователя должен совпадать")
