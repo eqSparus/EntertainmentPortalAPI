@@ -1,14 +1,13 @@
 package ru.portal.rest.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ru.portal.entities.dto.request.auth.DtoUserRequest;
 import ru.portal.entities.dto.response.auth.DtoAuthenticationResponse;
 import ru.portal.entities.dto.response.auth.DtoFailedResponse;
@@ -25,31 +24,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @SpringBootTest
+@AutoConfigureMockMvc
 class AuthenticationRestTests {
 
     private static final Pattern REGEX_TOKEN_WITH_BEARER = Pattern
             .compile("Bearer_([\\w_=]+)\\.([\\w_=]+)\\.([\\w_\\-\\+\\/=]*)");
     private static final Pattern REGEX_REFRESH_TOKEN = Pattern.compile("\\w{32}");
 
-    private MockMvc mockMvc;
-    private final AuthenticationRest authenticationRest;
-    private final HandleExceptionAuthRest authRest;
+    private final MockMvc mockMvc;
     private final ObjectMapper mapper;
 
     @Autowired
-    AuthenticationRestTests(AuthenticationRest authenticationRest,
-                            HandleExceptionAuthRest authRest,
+    AuthenticationRestTests(MockMvc mockMvc,
                             ObjectMapper mapper) {
-        this.authenticationRest = authenticationRest;
-        this.authRest = authRest;
+        this.mockMvc = mockMvc;
         this.mapper = mapper;
     }
-
-    @BeforeEach
-    void init() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(this.authenticationRest, this.authRest).build();
-    }
-
 
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test

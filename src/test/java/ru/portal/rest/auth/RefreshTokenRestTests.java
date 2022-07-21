@@ -1,14 +1,13 @@
 package ru.portal.rest.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ru.portal.entities.dto.response.auth.DtoAuthenticationResponse;
 import ru.portal.entities.dto.response.auth.DtoFailedResponse;
 
@@ -20,31 +19,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 class RefreshTokenRestTests {
 
     private static final Pattern REGEX_TOKEN_WITH_BEARER = Pattern
             .compile("Bearer_([\\w_=]+)\\.([\\w_=]+)\\.([\\w_\\-\\+\\/=]*)");
     private static final Pattern REGEX_REFRESH_TOKEN = Pattern.compile("\\w{32}");
 
-    private final RefreshTokenRest refreshTokenRest;
-    private final HandleExceptionAuthRest authRest;
     private final ObjectMapper mapper;
-    private MockMvc mockMvc;
+    private final MockMvc mockMvc;
 
     @Autowired
-    public RefreshTokenRestTests(RefreshTokenRest refreshTokenRest,
-                                 HandleExceptionAuthRest authRest,
-                                 ObjectMapper mapper) {
-        this.refreshTokenRest = refreshTokenRest;
-        this.authRest = authRest;
+    public RefreshTokenRestTests(ObjectMapper mapper, MockMvc mockMvc) {
         this.mapper = mapper;
+        this.mockMvc = mockMvc;
     }
-
-    @BeforeEach
-    void init() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(this.refreshTokenRest, this.authRest).build();
-    }
-
+    
     @Sql(scripts = {"/sql/user_active_test.sql", "/sql/auth/refresh_token_repository_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
