@@ -68,7 +68,7 @@ class AuthenticationRestTests {
         );
     }
 
-    @Sql(scripts = "/sql/user_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "/sql/user/user_await_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
     void testRegistrationUserFailsUserExists() throws Exception {
@@ -97,7 +97,7 @@ class AuthenticationRestTests {
     }
 
 
-    @Sql(scripts = {"/sql/user_active_test.sql", "/sql/auth/login_attempt_test.sql"},
+    @Sql(scripts = {"/sql/user/user_active_test.sql", "/sql/auth/login_attempt_valid_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -126,7 +126,7 @@ class AuthenticationRestTests {
         );
     }
 
-    @Sql(scripts = {"/sql/user_active_test.sql", "/sql/auth/login_attempt_test.sql"},
+    @Sql(scripts = {"/sql/user/user_active_test.sql", "/sql/auth/login_attempt_valid_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -155,7 +155,7 @@ class AuthenticationRestTests {
         );
     }
 
-    @Sql(scripts = {"/sql/user_block_test.sql", "/sql/auth/login_attempt_block_test.sql"},
+    @Sql(scripts = {"/sql/user/user_block_test.sql", "/sql/auth/login_attempt_block_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -184,7 +184,7 @@ class AuthenticationRestTests {
         );
     }
 
-    @Sql(scripts = "/sql/user_active_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "/sql/user/user_active_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
     void testCheckUsernameExist() throws Exception {
@@ -208,7 +208,7 @@ class AuthenticationRestTests {
                 "Пользователь должен существовать");
     }
 
-    @Sql(scripts = "/sql/user_active_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "/sql/user/user_active_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
     void testCheckEmailExist() throws Exception {
@@ -233,7 +233,7 @@ class AuthenticationRestTests {
                 "Пользователь должен существовать");
     }
 
-    @Sql(scripts = {"/sql/user_test.sql", "/sql/auth/confirmation_token_test.sql"},
+    @Sql(scripts = {"/sql/user/user_await_test.sql", "/sql/auth/confirmation_token_valid_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -255,7 +255,7 @@ class AuthenticationRestTests {
                 "Сообщение должно присутствовать");
     }
 
-    @Sql(scripts = {"/sql/user_test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = {"/sql/user/user_await_test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
     void testConfirmationTokenNotExist() throws Exception {
@@ -276,7 +276,7 @@ class AuthenticationRestTests {
                 "Сообщение должно присутствовать");
     }
 
-    @Sql(scripts = {"/sql/user_test.sql","/sql/auth/confirmation_token_not_valid_time_test.sql"},
+    @Sql(scripts = {"/sql/user/user_await_test.sql","/sql/auth/confirmation_token_not_valid_time_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test

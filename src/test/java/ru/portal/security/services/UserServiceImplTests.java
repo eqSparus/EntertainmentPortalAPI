@@ -69,7 +69,7 @@ class UserServiceImplTests {
         assertNotNull(response.getMessage(), "Сообщение должно существовать");
     }
 
-    @Sql(scripts = "/sql/user_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "/sql/user/user_await_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
     void testRegistrationUserExists() {
@@ -83,7 +83,7 @@ class UserServiceImplTests {
         assertNotNull(exception.getMessage(), "Сообщение должно присутствовать");
     }
 
-    @Sql(scripts = {"/sql/user_active_test.sql", "/sql/auth/login_attempt_test.sql"},
+    @Sql(scripts = {"/sql/user/user_active_test.sql", "/sql/auth/login_attempt_valid_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -99,7 +99,7 @@ class UserServiceImplTests {
                 "Токен обновления должен соответствовать регулярному выражению");
     }
 
-    @Sql(scripts = {"/sql/user_active_test.sql", "/sql/auth/login_attempt_test.sql"},
+    @Sql(scripts = {"/sql/user/user_active_test.sql", "/sql/auth/login_attempt_valid_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -114,7 +114,7 @@ class UserServiceImplTests {
         assertNotNull(exception.getMessage(), "Сообщение должно присутствовать");
     }
 
-    @Sql(scripts = {"/sql/user_block_test.sql", "/sql/auth/login_attempt_block_test.sql"},
+    @Sql(scripts = {"/sql/user/user_block_test.sql", "/sql/auth/login_attempt_block_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -129,7 +129,7 @@ class UserServiceImplTests {
         assertNotNull(exception.getMessage(), "Исключение некорректные данные должны бросаться");
     }
 
-    @Sql(scripts = {"/sql/user_block_test.sql", "/sql/auth/login_attempt_test.sql"},
+    @Sql(scripts = {"/sql/user/user_block_test.sql", "/sql/auth/login_attempt_valid_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -140,7 +140,7 @@ class UserServiceImplTests {
         assertTrue(isTimeBlock, "Время блокировки должно быть закончено");
     }
 
-    @Sql(scripts = {"/sql/user_block_test.sql", "/sql/auth/login_attempt_block_test.sql"},
+    @Sql(scripts = {"/sql/user/user_block_test.sql", "/sql/auth/login_attempt_block_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -151,7 +151,7 @@ class UserServiceImplTests {
         assertFalse(isTimeBlock, "Время блокировки должно быть не закончено");
     }
 
-    @Sql(scripts = "/sql/user_block_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "/sql/user/user_block_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
     void testUpdateStatus() {
@@ -163,7 +163,7 @@ class UserServiceImplTests {
         assertEquals(Status.ACTIVE, user.getStatus(), "Пользователь должен быть активирован");
     }
 
-    @Sql(scripts = "/sql/user_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "/sql/user/user_await_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
     void testCheckUsernameExist() {
@@ -177,7 +177,7 @@ class UserServiceImplTests {
         assertFalse(exist,"Пользователь не должен существовать");
     }
 
-    @Sql(scripts = "/sql/user_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "/sql/user/user_await_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
     void testCheckEmailExist() {

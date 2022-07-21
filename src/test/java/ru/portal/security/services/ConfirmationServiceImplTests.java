@@ -33,7 +33,7 @@ class ConfirmationServiceImplTests {
         this.userRepository = userRepository;
     }
 
-    @Sql(scripts = {"/sql/user_test.sql", "/sql/auth/confirmation_token_test.sql"},
+    @Sql(scripts = {"/sql/user/user_await_test.sql", "/sql/auth/confirmation_token_valid_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -55,7 +55,7 @@ class ConfirmationServiceImplTests {
         );
     }
 
-    @Sql(scripts = "/sql/user_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "/sql/user/user_await_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
     void testConfirmationNotExistsToken() {
@@ -67,7 +67,7 @@ class ConfirmationServiceImplTests {
         assertNotNull(exception.getMessage(), "Сообщение должно присутствовать");
     }
 
-    @Sql(scripts = {"/sql/user_test.sql", "/sql/auth/confirmation_token_not_valid_time_test.sql"},
+    @Sql(scripts = {"/sql/user/user_await_test.sql", "/sql/auth/confirmation_token_not_valid_time_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test

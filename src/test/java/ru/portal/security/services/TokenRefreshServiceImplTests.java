@@ -33,7 +33,7 @@ class TokenRefreshServiceImplTests {
         this.refreshTokenRepository = refreshTokenRepository;
     }
 
-    @Sql(scripts = {"/sql/user_test.sql", "/sql/auth/refresh_token_repository_test.sql"},
+    @Sql(scripts = {"/sql/user/user_await_test.sql", "/sql/auth/refresh_token_repository_valid_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -56,7 +56,7 @@ class TokenRefreshServiceImplTests {
         );
     }
 
-    @Sql(scripts = "/sql/user_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "/sql/user/user_await_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
     void testRefreshTokenNotExists() {
@@ -68,7 +68,7 @@ class TokenRefreshServiceImplTests {
         assertNotNull(exception.getMessage(), "Сообщение должно присутствовать");
     }
 
-    @Sql(scripts = {"/sql/user_test.sql", "/sql/auth/refresh_token_repository_not_valid_time_test.sql"},
+    @Sql(scripts = {"/sql/user/user_await_test.sql", "/sql/auth/refresh_token_repository_not_valid_time_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -81,7 +81,7 @@ class TokenRefreshServiceImplTests {
         assertNotNull(exception.getMessage(), "Сообщение должно присутствовать");
     }
 
-    @Sql(scripts = "/sql/user_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "/sql/user/user_await_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
     void testAddRefreshToken() {
@@ -103,7 +103,7 @@ class TokenRefreshServiceImplTests {
         );
     }
 
-    @Sql(scripts = {"/sql/user_test.sql", "/sql/auth/refresh_token_repository_test.sql"},
+    @Sql(scripts = {"/sql/user/user_await_test.sql", "/sql/auth/refresh_token_repository_valid_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -113,7 +113,7 @@ class TokenRefreshServiceImplTests {
         assertFalse(deleteToken.isPresent(), "Токена не должно существовать");
     }
 
-    @Sql(scripts = {"/sql/user_test.sql", "/sql/auth/refresh_token_repository_test.sql"},
+    @Sql(scripts = {"/sql/user/user_await_test.sql", "/sql/auth/refresh_token_repository_valid_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -123,7 +123,7 @@ class TokenRefreshServiceImplTests {
                 "Токен должен быть актуален");
     }
 
-    @Sql(scripts = {"/sql/user_test.sql", "/sql/auth/refresh_token_repository_not_valid_time_test.sql"},
+    @Sql(scripts = {"/sql/user/user_await_test.sql", "/sql/auth/refresh_token_repository_not_valid_time_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test

@@ -34,8 +34,8 @@ class RefreshTokenRestTests {
         this.mapper = mapper;
         this.mockMvc = mockMvc;
     }
-    
-    @Sql(scripts = {"/sql/user_active_test.sql", "/sql/auth/refresh_token_repository_test.sql"},
+
+    @Sql(scripts = {"/sql/user/user_active_test.sql", "/sql/auth/refresh_token_repository_valid_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
@@ -58,7 +58,7 @@ class RefreshTokenRestTests {
                 "Токен обновления должен соответствовать регулярному выражению");
     }
 
-    @Sql(scripts = "/sql/user_active_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "/sql/user/user_active_test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test
     void testRefreshTokenNotExist() throws Exception {
@@ -78,7 +78,7 @@ class RefreshTokenRestTests {
         assertNotNull(dtoToken.getMessage(), "Сообщение должно существовать");
     }
 
-    @Sql(scripts = {"/sql/user_active_test.sql", "/sql/auth/refresh_token_repository_not_valid_time_test.sql"},
+    @Sql(scripts = {"/sql/user/user_active_test.sql", "/sql/auth/refresh_token_repository_not_valid_time_test.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Test

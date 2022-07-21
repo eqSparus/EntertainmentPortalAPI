@@ -8,7 +8,7 @@ import org.springframework.test.context.jdbc.Sql;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@Sql(scripts = {"/sql/user_test.sql", "/sql/auth/refresh_token_repository_test.sql"},
+@Sql(scripts = {"/sql/user/user_await_test.sql", "/sql/auth/refresh_token_repository_valid_test.sql"},
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "/sql/cleaning.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @DataJpaTest
