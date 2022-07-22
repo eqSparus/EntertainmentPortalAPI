@@ -3,7 +3,7 @@ package ru.portal.mail;
 import org.springframework.lang.NonNull;
 import org.thymeleaf.context.Context;
 
-import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 /**
  * Интерфейс для отправки сообщений по электронной почте пользователю
@@ -28,7 +28,7 @@ public interface EmailService {
      * @param variable контекст шаблона
      * @return html строку письма
      */
-    String getHtmlMail(@NonNull String titleMail, @NonNull Supplier<Context> variable);
+    String getHtmlMail(@NonNull String titleMail, @NonNull UnaryOperator<Context> variable);
 
     /**
      * Метод для получения шаблона письма

@@ -15,7 +15,7 @@ import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import java.nio.charset.StandardCharsets;
-import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Service
@@ -67,8 +67,8 @@ public class EmailServiceImpl implements EmailService {
      * @return шаблон строки письма в html
      */
     @Override
-    public String getHtmlMail(@NonNull String titleMail, @NonNull Supplier<Context> variable) {
-        return templateEngine.process(titleMail, variable.get());
+    public String getHtmlMail(@NonNull String titleMail, @NonNull UnaryOperator<Context> variable) {
+        return templateEngine.process(titleMail, variable.apply(new Context()));
     }
 
     /**
@@ -79,7 +79,7 @@ public class EmailServiceImpl implements EmailService {
      */
     @Override
     public String getHtmlMail(@NonNull String titleMail) {
-        return getHtmlMail(titleMail, Context::new);
+        return getHtmlMail(titleMail, context -> context);
     }
 
 

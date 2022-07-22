@@ -12,7 +12,6 @@ import org.springframework.security.authentication.event.AuthenticationSuccessEv
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.context.Context;
 import ru.portal.entities.Status;
 import ru.portal.entities.auth.ConfirmationToken;
 import ru.portal.mail.EmailService;
@@ -162,8 +161,7 @@ public class AuthenticationListener {
 
         confirmationTokenRepository.save(confirmationToken);
 
-        var message = emailService.getHtmlMail("registrationUserEmail", () -> {
-            var context = new Context();
+        var message = emailService.getHtmlMail("registrationUserEmail", (context) -> {
             context.setVariable("username", user.getUsername());
             context.setVariable("token", confirmationToken.getToken());
             return context;
