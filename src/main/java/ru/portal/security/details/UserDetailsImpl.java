@@ -18,7 +18,7 @@ import java.util.Collections;
  * @author Федорышин К.В.
  */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class UserDetailsImpl implements UserDetails {
+public final class UserDetailsImpl implements UserDetails {
 
     User user;
 

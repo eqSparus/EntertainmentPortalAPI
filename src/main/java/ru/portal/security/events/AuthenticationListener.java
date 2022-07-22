@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.authentication.event.AbstractAuthenticationEvent;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -71,7 +72,7 @@ public class AuthenticationListener {
      */
     @Transactional
     @EventListener(classes = AuthenticationFailureBadCredentialsEvent.class)
-    public void onApplicationFailure(AuthenticationFailureBadCredentialsEvent event) {
+    public void onApplicationFailure(AbstractAuthenticationEvent event) {
 
         var username = (String) event.getAuthentication().getPrincipal();
         var user = userRepository.findByUsername(username);
@@ -104,7 +105,7 @@ public class AuthenticationListener {
      */
     @Transactional
     @EventListener(classes = AuthenticationSuccessEvent.class)
-    public void onApplicationSuccess(AuthenticationSuccessEvent event) {
+    public void onApplicationSuccess(AbstractAuthenticationEvent event) {
 
         var userDetails = (UserDetails) event.getAuthentication().getPrincipal();
         var user = userRepository.findByUsername(userDetails.getUsername())
